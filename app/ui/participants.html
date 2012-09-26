@@ -1,0 +1,39 @@
+<F3:include href="common/header.html" />
+<div class="container">
+
+	<div class="row">
+		<div class="span2">
+			<F3:include href="common/sidebar.html" />
+		</div>
+		<div class="span10">
+
+	<h1>{{@event['title']}}</h1>
+<article class="event">
+	<section class="title">
+	</section>
+	<section class="meta">
+	<p><span><i class="icon-time"></i> 时间</span> : <a href="#">{{@event['starttime']}}  -  {{@event['endtime']}} </a>; 
+	<span><i class="icon-map-marker"></i> 地点</span> : <a href="#">{{@event['location']}}</a>
+	</p>
+	</section>
+    <section class="meta">
+	<h1>活动的参加者及他们的空闲时间</h1>
+     <table class="table">
+		<tr>
+		<th>姓名</th>
+		<th>开始时间</th>
+		<th>结束时间</th>
+		</tr>
+    	<F3:repeat group="{{@values}}" value="{{@value}}">
+		<tr>
+		<th>{{trim(@value['name'])}}</th>
+	<th>{{trim(@value['starttime'])}}</th>
+	<th>{{trim(@value['endtime'])}}</th>
+	    </tr>
+		</F3:repeat>
+	</table>		
+     </article>
+		</div><!-- span10 -->
+	</div><!-- row -->
+</div><!-- Container -->
+

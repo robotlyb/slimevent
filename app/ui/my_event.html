@@ -1,0 +1,40 @@
+<F3:include href="common/header.html" />
+<div class="container">
+
+	<div class="row">
+		<div class="span2">
+			<F3:include href="common/sidebar.html" />
+		</div>
+		<div class="span10">
+
+		</section>
+    <section class="meta">
+	<h1>我创建的活动</h1>
+     <table class="table">
+		<tr>
+		<th>活动ID</th>
+		</tr>
+    	<F3:repeat group="{{@values1}}" value="{{@value}}">
+		<tr>
+		<th>{{trim(@value)}}</th>
+	    </tr>
+		</F3:repeat>
+	</table>		
+	</secion>
+ <section class="meta">
+	<h1>我参加的活动</h1>
+     <table class="table">
+		<tr>
+		<th>活动ID</th>
+		</tr>
+    	<F3:repeat group="{{@values2}}" value="{{@value}}">
+		<tr>
+		<th>{{trim(@value)}}</th>
+	    </tr>
+		</F3:repeat>
+	</table>		
+	</secion>
+    		</div><!-- span10 -->
+	</div><!-- row -->
+</div><!-- Container -->
+
