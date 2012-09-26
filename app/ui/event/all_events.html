@@ -1,0 +1,41 @@
+<F3:include href="common/header.html" />
+<div class="container">
+
+	<div class="row">
+
+		<div class="span2">
+			<F3:include href="common/sidebar.html" />
+		</div>
+
+		<div class="span8">
+			<br/>
+			<br/>
+			<br/>
+			<br/>
+
+			 <table class="table table-hover">
+				<F3:repeat group="{{@events}}" value="{{@v}}">
+				<tr>
+					<td class="span2">
+						<img width="110px" height="130px" src="https://lh6.googleusercontent.com/_tcY7QLx6X_8/T-IKv4qkJZI/AAAAAAAABJQ/SSSSw_wHCBQ/s120-c-k/07_dinner_out.jpg" />
+					</td>
+
+					<td>
+					<h3><a href="{{@WEB_ROOT}}event/{{@v.id}}">{{@v.title}}</a></h3>
+					<ul>
+						<li>开始时间: {{@v.starttime}}</li>
+						<li>结束时间: {{@v.endtime}}</li>
+						<li>类别: {{@v.sort}}</li>
+						<li>地点: {{@v.location}}</li>
+					</ul>
+					</td>
+				</tr>
+				</F3:repeat>
+			</table>		
+
+		</div>
+
+   		</div><!-- span10 -->
+	</div><!-- row -->
+</div><!-- Container -->
+

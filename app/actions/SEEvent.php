@@ -8,6 +8,15 @@ class SEEvent{
 			F3::reroute('/');
 	}
 
+	function all_events()
+	{
+		$events = Event::get_all_events();
+		//Code::dump($events);
+		F3::set('events',$events);
+		echo Template::serve('/event/all_events.html');
+
+	}
+
 	function create(){
 		$id = Account::the_user_id(); //这个是当前登录用户的id
 		//你需要修改下面的代码和models里Event.php里的createevent()函数,使得创建活动用户的id也存到event表里
@@ -21,7 +30,16 @@ class SEEvent{
 				$_POST["starttime"],
 				$_POST["endtime"],
 				$_POST["introduction"]
-				);
+			);
+
+		if(isset($_FILES['avatar']))  //上传图像
+			if($_FILES['avatar']['tmp_name'])
+				if(is_uploaded_file($_FILES['avatar']['tmp_name']))
+				{
+					$path = "avatar/";
+					copy($_FILES['avatar']['tmp_name'],$path.$a.".jpg");
+				}
+
 
 		F3::reroute("/event/{$a}");
 	}
@@ -41,10 +59,13 @@ class SEEvent{
 
 	function participants()
 	{
+		F3::set('route', array('discover', 'participants'));
 		$eid = F3::get('PARAMS.eventID');  //这个是用户要参加的活动id
 		//	echo "参加活动的id: ".$eid;
-	$event = Event::getevent($eid);
-	F3::set('event',$event[0]);
+
+		$event = Event::getevent($eid);
+		F3::set('event',$event[0]);
+
 		$result = Event::get_participant($eid);
 		$values = array();
 		foreach($result as $row)
@@ -67,22 +88,12 @@ class SEEvent{
 		//	echo "当前登录用户的id: ".$uid;
 
 		$my_create = Event::my_create_event($uid);
+		$my_join = Event::my_join_event($uid);
 	
-         $values1=array();
-		foreach(F3::get('DB->result') as $row)
-		{
-		//	values1[]="<a href='/slimevent/event/{$row['event_id']}'>{$row["event_id"]}";
-    	$values1[]="<a href='/slimevent/event/{$row['event_id']}'>{$row["event_id"]}";
-		}
-        F3::set('values1',$values1);
-			$my_join = Event::my_join_event($uid);
-	     $values2=array();
 
-		foreach(F3::get('DB->result') as $row)
-		{
-		$values2[]="<a href='/slimevent/event/{$row['event_id']}'>{$row["event_id"]}";;
-		}
-        F3::set('values2',$values2);
+        F3::set('my_create',$my_create);
+        F3::set('my_join',$my_join);
+
 		echo Template::serve('my_event.html');
 
 	}

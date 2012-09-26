@@ -1,6 +1,6 @@
 <F3:include href="common/header.html" />
-<div class="container">
 
+<div class="container">
 	<div class="row">
 		<div class="span2">
 			<F3:include href="common/sidebar.html" />
@@ -14,18 +14,19 @@
 
 	<section class="social">
 	<div class="btn-toolbar">
-		<div class="btn-group">
-			<a class="btn" href="#"><i class="icon-heart-empty"></i> 喜欢 <small>(204)</small></a>
-			<a class="btn" href="{{@WEB_ROOT}}share"><i class="icon-share"></i> 分享 <small>(32)</small></a>
-		</div>
+		<!--<div class="btn-group">-->
+			<!--<a class="btn" href="#"><i class="icon-heart-empty"></i> 喜欢 <small>(204)</small></a>-->
+		<!--</div>-->
 		<div class="btn-group pull-right">
-			<a class="btn" href="#"><i class="icon-comment"></i> 说两句</a>
+			<!--<a class="btn" href="#"><i class="icon-comment"></i> 说两句</a>-->
+			<!--<a class="btn" href="{{@WEB_ROOT}}event/{{@event.id}}/share"><i class="icon-share"></i> 分享到人人网 </a>-->
+			<a name="xn_share" type="button_count_right" href="#">分享到人人</a><script src="http://static.connect.renren.com/js/share.js" type="text/javascript"></script>
 		</div>
 	</div>
 	</section>
 
 	<section class="featured">
-		<img src="{{@WEB_ROOT}}static/img/cover.jpg" />
+		<img src="{{@WEB_ROOT}}avatar/{{@event.id}}.jpg" onerror="javascript:this.src='{{@WEB_ROOT}}avatar/-1.jpg'" />
 	</section>
 
 	<section class="meta">
@@ -37,9 +38,8 @@
 
 	<section class="description">
 	<p>{{@event['introduction']}}</p>
-
-
 	</section>
+
 </article>
 		</div><!-- span10 -->
 	</div><!-- row -->

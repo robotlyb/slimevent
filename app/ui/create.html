@@ -12,7 +12,7 @@
 <h1>创建活动</h1>
 <article class="event">
 
-<form class="form-horizontal" method='post'>
+<form class="form-horizontal" method='post' enctype="multipart/form-data">
 
 <fieldset>
 <legend>基本信息</legend>
@@ -29,12 +29,12 @@
 <div class="control-group">
 <label class="control-label" for="input01">开始时间</label>
 
-<div class="controls"> <input type="text" class="input-xlarge" id="input01" name ="starttime"> <span class="help-inline">时间格式：YYYY-MM-DD HH:MM:SS</span> </div>
+<div class="controls" > <input data-date-format="yyyy-mm-dd" type="text" class="datepicker input-xlarge" id="datetime" name ="starttime"> <span class="help-inline">时间格式：YYYY-MM-DD HH:MM:SS</span> </div>
 </div>
 <div class="control-group">
 <label class="control-label" for="input01">结束时间</label>
 
-<div class="controls"> <input type="text" class="input-xlarge" id="input01" name ="endtime"><span class="help-inline">时间格式：YYYY-MM-DD HH:MM:SS</span> </div>
+<div class="controls"> <input data-date-format="yyyy-mm-dd" type="text" class="datepicker input-xlarge" id="input01" name ="endtime"><span class="help-inline">时间格式：YYYY-MM-DD HH:MM:SS</span> </div>
 </div>
 <div class="control-group">
 <label class="control-label" for="input01">分类</label>
@@ -57,29 +57,29 @@
 </div>
 <div class="control-group">
 <label class="control-label" for="input01">主图片</label>
-<div class="controls"> <input type="file" class="input-file input-xlarge" id="input01"> <span class="help-inline">建议大小, 800x350像素</span></div>
+<div class="controls"> <input type="file" class="input-file input-xlarge" id="input01" name="avatar"> <span class="help-inline">建议大小, 800x350像素</span></div>
 </div>
 </fieldset>
 <fieldset>
 <legend>活动详情</legend>
 
 <div class="control-group">
-<div class="btn-toolbar">
-<div class="btn-group">
-<a class="btn" href="#"><i class="icon-font"></i></a>
-<a class="btn" href="#"><i class="icon-bold"></i></a>
-<a class="btn" href="#"><i class="icon-italic"></i></a>
-<a class="btn" href="#"><i class="icon-underline"></i></a>
-</div>
-<div class="btn-group">
-<a class="btn" href="#"><i class="icon-link"></i></a>
-<a class="btn" href="#"><i class="icon-list-ul"></i></a>
-<a class="btn" href="#"><i class="icon-list-ol"></i></a>
-</div>
-<div class="btn-group">
-<a class="btn" href="#"><i class="icon-file"></i></a>
-</div>
-</div>
+<!--<div class="btn-toolbar">-->
+<!--<div class="btn-group">-->
+<!--<a class="btn" href="#"><i class="icon-font"></i></a>-->
+<!--<a class="btn" href="#"><i class="icon-bold"></i></a>-->
+<!--<a class="btn" href="#"><i class="icon-italic"></i></a>-->
+<!--<a class="btn" href="#"><i class="icon-underline"></i></a>-->
+<!--</div>-->
+<!--<div class="btn-group">-->
+<!--<a class="btn" href="#"><i class="icon-link"></i></a>-->
+<!--<a class="btn" href="#"><i class="icon-list-ul"></i></a>-->
+<!--<a class="btn" href="#"><i class="icon-list-ol"></i></a>-->
+<!--</div>-->
+<!--<div class="btn-group">-->
+<!--<a class="btn" href="#"><i class="icon-file"></i></a>-->
+<!--</div>-->
+<!--</div>-->
 
 <textarea class="input-xlarge" style="width:90%;height:250px;" name="introduction"></textarea>
 </div>

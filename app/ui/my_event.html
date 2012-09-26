@@ -2,39 +2,58 @@
 <div class="container">
 
 	<div class="row">
-		<div class="span2">
-			<F3:include href="common/sidebar.html" />
-		</div>
-		<div class="span10">
+		<div class="span6">
 
-		</section>
-    <section class="meta">
-	<h1>我创建的活动</h1>
-     <table class="table">
+	<h2>我创建的活动</h2>
+
+     <table class="table table-hover">
+    	<F3:repeat group="{{@my_create}}" value="{{@v}}">
 		<tr>
-		<th>活动ID</th>
+			<td class="span2">
+				<img width="110px" height="130px" src="{{@WEB_ROOT}}avatar/{{@v.id}}.jpg" onerror="javascript:this.src='{{@WEB_ROOT}}avatar/-1.jpg'"/>
+			</td>
+
+			<td>
+			<h3><a href="{{@WEB_ROOT}}event/{{@v.id}}">{{@v.title}}</a></h3>
+			<ul>
+				<li>开始时间: {{@v.starttime}}</li>
+				<li>结束时间: {{@v.endtime}}</li>
+				<li>类别: {{@v.sort}}</li>
+				<li>地点: {{@v.location}}</li>
+			</ul>
+			</td>
 		</tr>
-    	<F3:repeat group="{{@values1}}" value="{{@value}}">
-		<tr>
-		<th>{{trim(@value)}}</th>
-	    </tr>
 		</F3:repeat>
 	</table>		
-	</secion>
- <section class="meta">
-	<h1>我参加的活动</h1>
-     <table class="table">
+
+	</div>
+		<div class="span6">
+
+	<h2>我参加的活动</h2>
+
+     <table class="table table-hover">
+    	<F3:repeat group="{{@my_join}}" value="{{@v}}">
 		<tr>
-		<th>活动ID</th>
+			<td class="span2">
+				<img width="110px" height="130px" src="{{@WEB_ROOT}}avatar/{{@v.id}}.jpg" onerror="javascript:this.src='{{@WEB_ROOT}}avatar/-1.jpg'"/>
+			</td>
+
+			<td>
+			<h3><a href="{{@WEB_ROOT}}event/{{@v.id}}">{{@v.title}}</a></h3>
+			<ul>
+				<li>开始时间: {{@v.starttime}}</li>
+				<li>结束时间: {{@v.endtime}}</li>
+				<li>类别: {{@v.sort}}</li>
+				<li>地点: {{@v.location}}</li>
+			</ul>
+			</td>
 		</tr>
-    	<F3:repeat group="{{@values2}}" value="{{@value}}">
-		<tr>
-		<th>{{trim(@value)}}</th>
-	    </tr>
 		</F3:repeat>
-	</table>		
-	</secion>
-    		</div><!-- span10 -->
+	</table>	
+
+		
+
+   		</div><!-- span10 -->
 	</div><!-- row -->
 </div><!-- Container -->
 

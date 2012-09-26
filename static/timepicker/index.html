@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>Timepicker Example Page</title>
+	<link type="text/css" href="css/ui-lightness/jquery-ui-1.7.2.custom.css" rel="stylesheet" />
+    <style type="text/css">
+	    body{ font: 80% "Trebuchet MS", sans-serif; margin: 50px;}
+    </style>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/timepicker.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#datetime').datepicker({
+                duration: '',
+                showTime: true,
+                constrainInput: false
+            });
+        });
+</script>
+</head>
+<body>
+    <p>
+        <input type="text" name="datetime" id="datetime" value="" />
+    </p>
+</body>
+</html>

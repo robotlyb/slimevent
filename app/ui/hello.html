@@ -1,13 +1,45 @@
 <F3:include href="common/header.html" />
 
 		<div class="container">
-			<article class="event">
-				<h1>欢迎你,{{@COOKIE.se_user_name}}</h1>
-				<div class="btn-group">
-					<a class="btn btn-large" href="{{@WEB_ROOT}}logout"><i class="icon-user"></i> 退出登陆</a>
-					<a class="btn btn-large btn-success" href="{{@WEB_ROOT}}create"><i class="icon-plus-sign"></i> 发起一个事件</a>
+
+			<div class="row">
+
+				<div class="span2">
+					<F3:include href="common/sidebar.html" />
 				</div>
-			</article>
+
+				<div class="span8">
+
+					<div>
+						<h2 style="float:left">欢迎你,{{@COOKIE.se_user_name}}</h2>
+						<a  style="float:right" class="btn btn-large btn-success" href="{{@WEB_ROOT}}create"><i class="icon-plus-sign"></i> 发起一个活动</a>
+					</div>
+	
+					 <table class="table table-hover">
+						<F3:repeat group="{{@events}}" value="{{@v}}">
+						<tr>
+							<td class="span2">
+								<img width="110px" height="130px" src="{{@WEB_ROOT}}avatar/{{@v.id}}.jpg" onerror="javascript:this.src='{{@WEB_ROOT}}avatar/-1.jpg'"/>
+							</td>
+
+							<td>
+							<h3><a href="{{@WEB_ROOT}}event/{{@v.id}}">{{@v.title}}</a></h3>
+							<ul>
+								<li>开始时间: {{@v.starttime}}</li>
+								<li>结束时间: {{@v.endtime}}</li>
+								<li>类别: {{@v.sort}}</li>
+								<li>地点: {{@v.location}}</li>
+							</ul>
+							</td>
+						</tr>
+						</F3:repeat>
+					</table>		
+
+				</div>
+
+				</div><!-- span10 -->
+			</div><!-- row -->
+
 		</div><!-- Container -->
 
 <F3:include href="common/footer.html" />

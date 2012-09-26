@@ -4,7 +4,11 @@ class SEHome{
 
 	function run(){
 		if(Account::is_login() === TRUE)
+		{
+			$events = Event::get_all_events();
+			F3::set('events',$events);
 			echo Template::serve('hello.html');
+		}
 		else
 			echo Template::serve('login.html');
 	}
