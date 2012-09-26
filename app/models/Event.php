@@ -65,13 +65,13 @@ class Event{
 			}
 		return $events;
 	}
-	static function get_public_time()
+	static function get_public_time($event_id)
 	{
 		$time = array();
-		$starttime = DB::sql("select starttime from user_joinevent group by starttime order by count(starttime) desc limit 1");
+		$starttime = DB::sql("select starttime from user_joinevent where event_id = :event_id group by starttime order by count(starttime) desc limit 1",array(':event_id' =>$event_id));
 		$time[0] =$starttime[0]["starttime"];
 
-		$endtime = DB::sql("select endtime from user_joinevent where starttime = :time group by starttime order by count(starttime) desc limit 1",array(':time'=>$time[0]));
+		$endtime = DB::sql("select endtime from user_joinevent where starttime = :time and event_id = :event_id group by starttime order by count(starttime) desc limit 1",array(':time'=>$time[0],':event_id'=>$event_id));
 		$time[1] = $endtime[0]["endtime"];
 		return $time;
 

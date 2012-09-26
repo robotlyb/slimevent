@@ -76,10 +76,9 @@ class SEEvent{
 					'starttime' => $row["starttime"],
 					'endtime' => $row["endtime"]);
 		}
-		$time = Event::get_public_time();
+		$time = Event::get_public_time($eid);
 		F3::set('values', $values);
 		F3::set('time',$time);
-
 		echo Template::serve('participants.html');
 
 		//显示id为eid活动的所有参与者信息(名字,起始空闲时间)
