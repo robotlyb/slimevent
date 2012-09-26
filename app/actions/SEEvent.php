@@ -76,7 +76,9 @@ class SEEvent{
 					'starttime' => $row["starttime"],
 					'endtime' => $row["endtime"]);
 		}
+		$time = Event::get_public_time();
 		F3::set('values', $values);
+		F3::set('time',$time);
 
 		echo Template::serve('participants.html');
 
