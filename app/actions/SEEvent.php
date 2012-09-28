@@ -8,12 +8,19 @@ class SEEvent{
 			F3::reroute('/');
 	}
 
+	function sorts()
+	{
+		$str = F3::get('PARAMS.str');  //这个是用户要参加的活动id
+		$events = Event::sorts($str);	
+		F3::set('events',$events);
+		echo Template::serve('hello.html');
+	}
+
 	function all_events()
 	{
 		$events = Event::get_all_events();
-		//Code::dump($events);
 		F3::set('events',$events);
-		echo Template::serve('/event/all_events.html');
+		echo Template::serve('/event/.html');
 
 	}
 
@@ -106,6 +113,7 @@ class SEEvent{
 	function show(){
 		F3::set('route', array('discover', 'intro'));
 		$event = Event::getevent(F3::get('PARAMS.eventID'));
+		$event[0]['introduction'] = Sys::convert_br_space($event[0]['introduction']);
 		F3::set('event',$event[0]);
 
 		echo Template::serve('event/event.html');

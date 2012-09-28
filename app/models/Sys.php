@@ -1,6 +1,16 @@
 <?php
 
 class Sys{
+
+	/**
+	 * 处理文本中的换行和空格
+	 */
+	static function convert_br_space($text){
+		$text = str_replace(' ', '&nbsp;', $text);
+		$text = nl2br($text);
+		return $text;
+	}
+
 	static function time_quaters(){
 		static $times = null;
 

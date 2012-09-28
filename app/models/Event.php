@@ -3,6 +3,12 @@
 
 class Event{
 
+	static function sorts($str)
+	{
+		$sql = "SELECT * FROM event WHERE `sort` = :str";
+		$r = DB::sql($sql, array(':str' => $str));
+		return $r;
+	}
 	static function get_all_events()
 	{
 		$sql = "SELECT * FROM event";
