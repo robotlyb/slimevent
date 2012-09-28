@@ -18,17 +18,17 @@ class Event{
 	static function createevent($id,$title,$sort,$label,$location,$starttime,$endtime,$introduction)
 	{
 		DB::sql("insert into event(title,sort,label,location,starttime,endtime,introduction,creator) values(:title,:sort,:label,:location,:starttime,:endtime,:introduction,:uid)",
-			array(
-				':title' => $title,
-				':sort' => $sort,
-				':label' => $label,
-				':location'=>$location,
-				':starttime'=>$starttime,
-				':endtime'=>$endtime,
-				':introduction' => $introduction,
-				':uid' => $id
-				)
-			);
+				array(
+					':title' => $title,
+					':sort' => $sort,
+					':label' => $label,
+					':location'=>$location,
+					':starttime'=>$starttime,
+					':endtime'=>$endtime,
+					':introduction' => $introduction,
+					':uid' => $id
+					)
+			   );
 		$event_id=DB::get_insert_id();
 		return $event_id;
 	}
@@ -64,6 +64,17 @@ class Event{
 				$events[] = $event[0];
 			}
 		return $events;
+	}
+	static function get_public_time($event_id)
+	{
+		$time = array();
+		$starttime = DB::sql("select starttime from user_joinevent where event_id = :event_id group by starttime order by count(starttime) desc limit 1",array(':event_id' =>$event_id));
+		$time[0] =$starttime[0]["starttime"];
+
+		$endtime = DB::sql("select endtime from user_joinevent where starttime = :time and event_id = :event_id group by starttime order by count(starttime) desc limit 1",array(':time'=>$time[0],':event_id'=>$event_id));
+		$time[1] = $endtime[0]["endtime"];
+		return $time;
+
 	}
 
 };
