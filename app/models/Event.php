@@ -23,6 +23,11 @@ class Event{
 		return $r;
 	}
 
+	static function get_creator($eid)
+	{
+		$sql =  DB::sql("select creator from event where id = :eid",array(':eid'=>$eid));
+		return $sql[0]['creator'];
+	}
 	static function del_event($id)
 	{
 		$sql = "DELETE FROM event WHERE `id` = :eid";
@@ -130,14 +135,8 @@ class Event{
 		$event_name = DB::sql("select title from event where id = :eid",array(':eid'=>$eid))[0]['title'];
 		$public_time =  Event::get_public_time($eid);
 		$content = '下面的活动即将开始，请您注意参加！<br />活动名称:'.$event_name.'<br />活动公共时间:'.$public_time[0].' - '.$public_time[1].'<br />';
-//		echo $content;
-
-//		Code::dump($event_name);
-//		Code::dump($sql);
-//		echo $event_name;
 		foreach($user_id as $user_id)
 		{
-//			echo $user_id['user_id'];
 			DB::sql("insert into message(to_id,from_id,content,is_read) values(:user_id,:uid,:content,0)",array(':uid'=>$uid,':user_id'=>$user_id['user_id'],':content' => $content));
 		}	
 	}

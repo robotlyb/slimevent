@@ -101,10 +101,16 @@ class SEEvent{
 	{
 		F3::set('route', array('discover', 'participants'));
 		$eid = F3::get('PARAMS.eventID');  //这个是用户要参加的活动id
+		$uid = Account::the_user_id(); //这个是当前登录用户的id
 		//	echo "参加活动的id: ".$eid;
 
 		$event = Event::getevent($eid);
 		F3::set('event',$event[0]);
+		$creator =Event::get_creator($eid);
+		if ($creator == $uid)
+		$inform = "<button type='submit' class='btn btn-success'><i class='icon-ok-sign'></i> 通知所有参与者</button> ";
+		else
+		$inform = "";
 
 		$result = Event::get_participant($eid);
 		$values = array();
@@ -119,6 +125,7 @@ class SEEvent{
 		$time = Event::get_public_time($eid);
 		F3::set('values', $values);
 		F3::set('time',$time);
+		F3::set('inform',$inform);
 		echo Template::serve('participants.html');
 
 		//显示id为eid活动的所有参与者信息(名字,起始空闲时间)
@@ -160,6 +167,7 @@ class SEEvent{
 		F3::set('title',"创建活动");
 		echo Template::serve('create.html');
 	}
+
 
 	function show(){
 		F3::set('route', array('discover', 'intro'));
