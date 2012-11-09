@@ -25,8 +25,10 @@ class Event{
 
 	static function del_event($id)
 	{
-		$sql = "DELETE  FROM event WHERE `id` = :eid";
-		$r = DB::sql($sql, array(':eid' => $id));
+		$sql = "DELETE FROM event WHERE `id` = :eid";
+		DB::sql($sql, array(':eid' => $id));
+		$sql = "DELETE FROM user_joinevent WHERE `event_id` = :eid";
+		DB::sql($sql, array(':eid' => $id));
 	}
 	static function get_all_events()
 	{
