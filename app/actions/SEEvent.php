@@ -10,34 +10,51 @@ class SEEvent{
 
 	function sorts()
 	{
-		$str = F3::get('PARAMS.str');  //这个是用户要参加的活动id
+		$str = F3::get('PARAMS.str'); 
 		$events = Event::sorts($str);	
 		F3::set('events',$events);
 		echo Template::serve('hello.html');
 	}
-
+	function show_by_time()
+	{
+		$status = F3::get('PARAMS.status');  
+		$events = Event::status($status);	
+		F3::set('events',$events);
+		echo Template::serve('hello.html');
+	}
 	function all_events()
 	{
 		$events = Event::get_all_events();
 		F3::set('events',$events);
 		echo Template::serve('/event/.html');
-
 	}
 
 	function create(){
 		$id = Account::the_user_id(); //这个是当前登录用户的id
 		//你需要修改下面的代码和models里Event.php里的createevent()函数,使得创建活动用户的id也存到event表里
-
+		if(empty($_POST['eid']))
 		$a =Event::createevent(
-			$id,
-			$_POST["title"],
-			$_POST["sort"],
-			$_POST["label"],
-			$_POST["location"],
-			$_POST["starttime"],
-			$_POST["endtime"],
-			$_POST["introduction"]
-		);
+				$id,
+				$_POST["title"],
+				$_POST["sort"],
+				$_POST["label"],
+				$_POST["location"],
+				$_POST["starttime"],
+				$_POST["endtime"],
+				$_POST["introduction"]
+			);
+		else	
+		$a =Event::editevent(
+				$_POST["eid"],
+				$id,
+				$_POST["title"],
+				$_POST["sort"],
+				$_POST["label"],
+				$_POST["location"],
+				$_POST["starttime"],
+				$_POST["endtime"],
+				$_POST["introduction"]
+			);
 
 		if(isset($_FILES['avatar']))  //上传图像
 			if($_FILES['avatar']['tmp_name'])
@@ -47,8 +64,24 @@ class SEEvent{
 					copy($_FILES['avatar']['tmp_name'],$path.$a.".jpg");
 				}
 
-
 		F3::reroute("/event/{$a}");
+	}
+	function edit()
+	{
+		F3::set('route', array('discover', 'edit'));
+		$event = Event::getevent(F3::get('PARAMS.eventID'));
+		$event[0]['introduction'] = Sys::convert_br_space($event[0]['introduction']);
+
+		F3::set('event',$event[0]);
+		F3::set('eid',F3::get('PARAMS.eventID'));
+		F3::set('title',"修改活动");
+		echo Template::serve('create.html');
+	}
+	function del()
+	{
+		$eid = F3::get('PARAMS.eventID');  //这个是用户要参加的活动id
+		Event::del_event($eid);
+		F3::reroute("/event/my");
 	}
 
 	function show_join()
@@ -118,6 +151,7 @@ class SEEvent{
 	}
 
 	function show_create(){
+		F3::set('title',"创建活动");
 		echo Template::serve('create.html');
 	}
 
@@ -125,7 +159,27 @@ class SEEvent{
 		F3::set('route', array('discover', 'intro'));
 		$event = Event::getevent(F3::get('PARAMS.eventID'));
 		$event[0]['introduction'] = Sys::convert_br_space($event[0]['introduction']);
+
+		$now = strtotime(date("Y-m-d"));
+		$start = strtotime($event[0]['starttime']);
+		$end = strtotime($event[0]['endtime']);
+		if($start > $now)
+		{
+			$event[0]['status'] = "还有". ($start-$now)/86400 . "天开始";
+			$event[0]['status_num'] = -1;
+		}
+		else if($end < $now)
+		{
+			$event[0]['status'] = "已结束";
+			$event[0]['status_num'] = 1;
+		}
+		else
+		{
+		 	$event[0]['status'] = "进行中";
+			$event[0]['status_num'] = 0;
+		}
 		F3::set('event',$event[0]);
+		F3::set('uid',Account::the_user_id());
 
 		echo Template::serve('event/event.html');
 	}

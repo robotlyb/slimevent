@@ -15,8 +15,17 @@
 	<section class="social">
 	<div class="btn-toolbar">
 		<div class="btn-group pull-right">
-			<!--<a class="btn" href="#"><i class="icon-heart-empty"></i> 喜欢 <small>(204)</small></a>-->
-			<a class="btn btn-primary" href="#discuss"><i class="icon-comment"></i> 说两句</a>
+		<F3:check if="{{@event['status_num'] == -1}}">
+			<F3:true>
+				<a class="btn btn-warning" href="#"><i class="icon-ok"></i> {{@event['status']}}</a>
+			</F3:true>
+		</F3:check>
+		<F3:check if="{{@event['status_num'] == 0}}">
+			<F3:true>
+				<a class="btn btn-danger" href="#"><i class="icon-ok"></i> {{@event['status']}}</a>
+			</F3:true>
+		</F3:check>
+			<a class="btn" href="#discuss"><i class="icon-comment"></i> 说两句</a>
 		</div>
 	</div>
 	</section>
@@ -28,7 +37,14 @@
 	<section class="meta">
 	<p><span><i class="icon-time"></i> 时间</span> : <a href="#">{{@event['starttime']}}  -  {{@event['endtime']}} </a>; 
 	<span><i class="icon-map-marker"></i> 地点</span> : <a href="#">{{@event['location']}}</a>
+		<F3:check if="{{@event['status_num'] == 1}}">
+			<F3:true>
+				<a class="btn btn-inverse pull-right" href="#"><i class="icon-ok"></i> 已结束</a>
+			</F3:true>
+			<F3:false>
 		<a class="btn btn-success pull-right" href="{{@WEB_ROOT}}joins/{{@event['id']}}"><i class="icon-ok-sign"></i> 我要参加</a>
+			</F3:false>
+		</F3:check>
 	</p>
 	</section>
 

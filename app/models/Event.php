@@ -9,6 +9,25 @@ class Event{
 		$r = DB::sql($sql, array(':str' => $str));
 		return $r;
 	}
+
+	static function status($status)
+	{
+		$now = date("Y-m-d");
+		if($status == -1)
+			$sql = "SELECT * FROM `event` WHERE `starttime` > '$now'";
+		if($status == 0)
+			$sql = "SELECT * FROM `event` WHERE `starttime` <= '$now' AND `endtime` >= '$now'";
+		if($status == 1)
+			$sql = "SELECT * FROM `event` WHERE `endtime` < '$now'";
+		$r = DB::sql($sql);
+		return $r;
+	}
+
+	static function del_event($id)
+	{
+		$sql = "DELETE  FROM event WHERE `id` = :eid";
+		$r = DB::sql($sql, array(':eid' => $id));
+	}
 	static function get_all_events()
 	{
 		$sql = "SELECT * FROM event";
@@ -21,6 +40,25 @@ class Event{
 	static function getevent($id)
 	{
 		return $r=DB::sql("select * from event where id= :id",array(':id' => $id));
+	}
+
+	static function editevent($eid,$id,$title,$sort,$label,$location,$starttime,$endtime,$introduction)
+	{
+		self::del_event($eid);
+		DB::sql("insert into event(id,title,sort,label,location,starttime,endtime,introduction,creator) values(:eid,:title,:sort,:label,:location,:starttime,:endtime,:introduction,:uid)",
+				array(
+					':eid' => $eid,
+					':title' => $title,
+					':sort' => $sort,
+					':label' => $label,
+					':location'=>$location,
+					':starttime'=>$starttime,
+					':endtime'=>$endtime,
+					':introduction' => $introduction,
+					':uid' => $id
+					)
+			   );
+		return $eid;
 	}
 
 	static function createevent($id,$title,$sort,$label,$location,$starttime,$endtime,$introduction)
