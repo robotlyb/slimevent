@@ -18,16 +18,16 @@
 		$(function(){
 			$('.dropdown-toggle').dropdown();
 			$('.datepicker').datepicker();
+
 		});
-		/*
+			function del_event()
+			{
+				if(confirm("确定删除活动吗?"))
+					window.location="{{@WEB_ROOT}}event/{{@event.id}}/del";
+			}
+
     $(document).ready(function() {
-        $('#datetime').datepicker({
-            duration: '',
-            showTime: true,
-            constrainInput: false
-        });
     });
-	*/
 	</script>
 </head>
 <body>
@@ -71,9 +71,12 @@
 						<F3:check if="{{ @route[0] == 'discover' }}">
 				<ul class="nav nav-pills">
 					<li {{ @route[1] == 'intro' ? 'class="active"' : ''}}><a href="{{@WEB_ROOT}}event/{{@event.id}}"><i class="icon-barcode"></i> 活动介绍</a></li>
-					<!--<li {{ @route[1] == 'photo' ? 'class="active"' : ''}}><a href="{{@WEB_ROOT}}event/{{@event.id}}/photos"><i class="icon-camera-retro"></i> 照片</a></li>-->
-					<!--<li {{ @route[1] == 'discussion' ? 'class="active"' : ''}}><a href="{{@WEB_ROOT}}event/{{@event.id}}/discussion"><i class="icon-comments"></i> 讨论</a></li>-->
 					<li {{ @route[1] == 'participants' ? 'class="participants"' : '' }}><a href="{{@WEB_ROOT}}event/{{@event.id}}/participants"><i class="icon-group"></i> 参与者</a></li>
+							<F3:check if="{{@event['creator'] == @uid}}">
+					<li {{ @route[1] == 'edit' ? 'class="active"' : ''}}><a href="{{@WEB_ROOT}}event/{{@event.id}}/edit"><i class="icon-edit"></i> 编辑活动</a></li>
+					<li {{ @route[1] == 'del' ? 'class="active"' : ''}}><a href="javascript:del_event()"><i class="icon-remove"></i> 删除活动</a></li>
+							</F3:check>
+							</F3:check>
 				</ul>
 						</F3:check>
 					</div>

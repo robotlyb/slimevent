@@ -9,6 +9,11 @@ class Event{
 		$r = DB::sql($sql, array(':str' => $str));
 		return $r;
 	}
+	static function del_event($id)
+	{
+		$sql = "DELETE  FROM event WHERE `id` = :eid";
+		$r = DB::sql($sql, array(':eid' => $id));
+	}
 	static function get_all_events()
 	{
 		$sql = "SELECT * FROM event";

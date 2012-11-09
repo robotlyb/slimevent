@@ -50,7 +50,12 @@ class SEEvent{
 
 		F3::reroute("/event/{$a}");
 	}
-
+	function del()
+	{
+		$eid = F3::get('PARAMS.eventID');  //这个是用户要参加的活动id
+		Event::del_event($eid);
+		F3::reroute("/event/my");
+	}
 	function show_join()
 	{
 		echo Template::serve('join.html');
@@ -90,6 +95,7 @@ class SEEvent{
 
 		//显示id为eid活动的所有参与者信息(名字,起始空闲时间)
 	}
+
 	function my()
 	{
 		$uid = Account::the_user_id(); //这个是当前登录用户的id
@@ -114,7 +120,27 @@ class SEEvent{
 		F3::set('route', array('discover', 'intro'));
 		$event = Event::getevent(F3::get('PARAMS.eventID'));
 		$event[0]['introduction'] = Sys::convert_br_space($event[0]['introduction']);
+
+		$now = strtotime(date("Y-m-d"));
+		$start = strtotime($event[0]['starttime']);
+		$end = strtotime($event[0]['endtime']);
+		if($start > $now)
+		{
+			$event[0]['status'] = "还有". ($start-$now)/86400 . "天开始";
+			$event[0]['status_num'] = -1;
+		}
+		else if($end < $now)
+		{
+			$event[0]['status'] = "已结束";
+			$event[0]['status_num'] = 1;
+		}
+		else
+		{
+		 	$event[0]['status'] = "进行中";
+			$event[0]['status_num'] = 0;
+		}
 		F3::set('event',$event[0]);
+		F3::set('uid',Account::the_user_id());
 
 		echo Template::serve('event/event.html');
 	}
