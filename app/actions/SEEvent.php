@@ -29,15 +29,15 @@ class SEEvent{
 		//你需要修改下面的代码和models里Event.php里的createevent()函数,使得创建活动用户的id也存到event表里
 
 		$a =Event::createevent(
-				$id,
-				$_POST["title"],
-				$_POST["sort"],
-				$_POST["label"],
-				$_POST["location"],
-				$_POST["starttime"],
-				$_POST["endtime"],
-				$_POST["introduction"]
-			);
+			$id,
+			$_POST["title"],
+			$_POST["sort"],
+			$_POST["label"],
+			$_POST["location"],
+			$_POST["starttime"],
+			$_POST["endtime"],
+			$_POST["introduction"]
+		);
 
 		if(isset($_FILES['avatar']))  //上传图像
 			if($_FILES['avatar']['tmp_name'])
@@ -77,11 +77,11 @@ class SEEvent{
 		$values = array();
 		foreach($result as $row)
 		{
-		
+
 			$values[]=array(
-					'name' => $row["name"],
-					'starttime' => $row["starttime"],
-					'endtime' => $row["endtime"]);
+				'name' => $row["name"],
+				'starttime' => $row["starttime"],
+				'endtime' => $row["endtime"]);
 		}
 		$time = Event::get_public_time($eid);
 		F3::set('values', $values);
@@ -90,6 +90,17 @@ class SEEvent{
 
 		//显示id为eid活动的所有参与者信息(名字,起始空闲时间)
 	}
+
+	function inform()
+	{
+		$uid = Account::the_user_id(); //这个是当前登录用户的id
+		$eid = F3::get('PARAMS.eventID');  //这个是用户要参加的活动id
+//		echo "id".$uid;
+//		echo $eid;
+		Event::sendmessage($uid,$eid);
+		SEEvent::participants();
+
+	}
 	function my()
 	{
 		$uid = Account::the_user_id(); //这个是当前登录用户的id
@@ -97,10 +108,10 @@ class SEEvent{
 
 		$my_create = Event::my_create_event($uid);
 		$my_join = Event::my_join_event($uid);
-	
 
-        F3::set('my_create',$my_create);
-        F3::set('my_join',$my_join);
+
+		F3::set('my_create',$my_create);
+		F3::set('my_join',$my_join);
 
 		echo Template::serve('my_event.html');
 

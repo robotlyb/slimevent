@@ -16,6 +16,8 @@ class Event{
 		return $r;
 	}
 
+
+
 	static function getevent($id)
 	{
 		return $r=DB::sql("select * from event where id= :id",array(':id' => $id));
@@ -81,6 +83,23 @@ class Event{
 		$time[1] = $endtime[0]["endtime"];
 		return $time;
 
+	}
+	static function sendmessage($uid,$eid)
+	{
+		$user_id = DB::sql("select distinct(user_id) from user_joinevent where event_id = :event_id",array(':event_id' =>$eid));
+		$event_name = DB::sql("select title from event where id = :eid",array(':eid'=>$eid))[0]['title'];
+		$public_time =  Event::get_public_time($eid);
+		$content = '下面的活动即将开始，请您注意参加！<br />活动名称:'.$event_name.'<br />活动公共时间:'.$public_time[0].' - '.$public_time[1].'<br />';
+//		echo $content;
+
+//		Code::dump($event_name);
+//		Code::dump($sql);
+//		echo $event_name;
+		foreach($user_id as $user_id)
+		{
+//			echo $user_id['user_id'];
+			DB::sql("insert into message(to_id,from_id,content,is_read) values(:uid,:user_id,:content,0)",array(':uid'=>$uid,':user_id'=>$user_id['user_id'],':content' => $content));
+		}	
 	}
 
 };
