@@ -33,7 +33,7 @@ class SEEvent{
 		$id = Account::the_user_id(); //这个是当前登录用户的id
 		//你需要修改下面的代码和models里Event.php里的createevent()函数,使得创建活动用户的id也存到event表里
 		if(empty($_POST['eid']))
-		$a =Event::createevent(
+			$a =Event::createevent(
 				$id,
 				$_POST["title"],
 				$_POST["sort"],
@@ -44,7 +44,7 @@ class SEEvent{
 				$_POST["introduction"]
 			);
 		else	
-		$a =Event::editevent(
+			$a =Event::editevent(
 				$_POST["eid"],
 				$id,
 				$_POST["title"],
@@ -124,12 +124,18 @@ class SEEvent{
 		//显示id为eid活动的所有参与者信息(名字,起始空闲时间)
 	}
 
+	function message()
+	{
+		$uid = Account::the_user_id(); //这个是当前登录用户的id
+		$content = Event::get_message($uid);
+		F3::set('values',$content);	
+		echo Template::serve('message.html');
+	}
+
 	function inform()
 	{
 		$uid = Account::the_user_id(); //这个是当前登录用户的id
 		$eid = F3::get('PARAMS.eventID');  //这个是用户要参加的活动id
-//		echo "id".$uid;
-//		echo $eid;
 		Event::sendmessage($uid,$eid);
 		SEEvent::participants();
 
@@ -175,7 +181,7 @@ class SEEvent{
 		}
 		else
 		{
-		 	$event[0]['status'] = "进行中";
+			$event[0]['status'] = "进行中";
 			$event[0]['status_num'] = 0;
 		}
 		F3::set('event',$event[0]);
@@ -194,6 +200,7 @@ class SEEvent{
 
 		echo Template::serve('event/discussion.html');
 	}
+
 };
 
 ?>

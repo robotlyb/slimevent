@@ -138,8 +138,13 @@ class Event{
 		foreach($user_id as $user_id)
 		{
 //			echo $user_id['user_id'];
-			DB::sql("insert into message(to_id,from_id,content,is_read) values(:uid,:user_id,:content,0)",array(':uid'=>$uid,':user_id'=>$user_id['user_id'],':content' => $content));
+			DB::sql("insert into message(to_id,from_id,content,is_read) values(:user_id,:uid,:content,0)",array(':uid'=>$uid,':user_id'=>$user_id['user_id'],':content' => $content));
 		}	
+	}
+
+	static function get_message($uid)
+	{
+		return DB::sql("select name,content from snsUsers,message where snsUsers.id = message.from_id and to_id = :uid",array(':uid'=>$uid));
 	}
 
 };
