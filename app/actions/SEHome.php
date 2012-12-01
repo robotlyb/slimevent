@@ -10,7 +10,7 @@ class SEHome{
 			echo Template::serve('hello.html');
 		}
 		else
-			echo Template::serve('login.html');
+			echo Template::serve('index.html');
 	}
 
 	function logout()

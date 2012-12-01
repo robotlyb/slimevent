@@ -26,13 +26,14 @@ class SEEvent{
 	{
 		$events = Event::get_all_events();
 		F3::set('events',$events);
-		echo Template::serve('/event/.html');
+		echo Template::serve('/event/all_event.html');
 	}
 
 	function create(){
 		$id = Account::the_user_id(); //这个是当前登录用户的id
 		//你需要修改下面的代码和models里Event.php里的createevent()函数,使得创建活动用户的id也存到event表里
 		if(empty($_POST['eid']))
+		{
 			$a =Event::createevent(
 				$id,
 				$_POST["title"],
@@ -43,6 +44,8 @@ class SEEvent{
 				$_POST["endtime"],
 				$_POST["introduction"]
 			);
+			Event::joinevent($id,$a,$_POST["starttime"],$_POST["endtime"]);
+		}
 		else	
 			$a =Event::editevent(
 				$_POST["eid"],
@@ -75,7 +78,7 @@ class SEEvent{
 		F3::set('event',$event[0]);
 		F3::set('eid',F3::get('PARAMS.eventID'));
 		F3::set('title',"修改活动");
-		echo Template::serve('create.html');
+		echo Template::serve('event/create.html');
 	}
 	function del()
 	{
@@ -86,7 +89,7 @@ class SEEvent{
 
 	function show_join()
 	{
-		echo Template::serve('join.html');
+		echo Template::serve('event/join.html');
 	}
 	function joins() 
 	{
@@ -126,7 +129,7 @@ class SEEvent{
 		F3::set('values', $values);
 		F3::set('time',$time);
 		F3::set('inform',$inform);
-		echo Template::serve('participants.html');
+		echo Template::serve('event/participants.html');
 
 		//显示id为eid活动的所有参与者信息(名字,起始空闲时间)
 	}
@@ -136,7 +139,7 @@ class SEEvent{
 		$uid = Account::the_user_id(); //这个是当前登录用户的id
 		$content = Event::get_message($uid);
 		F3::set('values',$content);	
-		echo Template::serve('message.html');
+		echo Template::serve('event/message.html');
 	}
 
 	function inform()
@@ -159,13 +162,13 @@ class SEEvent{
 		F3::set('my_create',$my_create);
 		F3::set('my_join',$my_join);
 
-		echo Template::serve('my_event.html');
+		echo Template::serve('event/my_event.html');
 
 	}
 
 	function show_create(){
 		F3::set('title',"创建活动");
-		echo Template::serve('create.html');
+		echo Template::serve('event/create.html');
 	}
 
 

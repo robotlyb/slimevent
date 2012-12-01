@@ -8,22 +8,21 @@
 		<div class="span10">
 
 	<h1>{{@event['title']}}</h1>
+
 <article class="event">
 	<section class="title">
 	</section>
 	<section class="meta">
 	<p><span><i class="icon-time"></i> 时间</span> : <a href="#">{{@event['starttime']}}  -  {{@event['endtime']}} </a>; 
 	<span><i class="icon-map-marker"></i> 地点</span> : <a href="#">{{@event['location']}}</a>
+		<form class="form-horizontal" method='post' style="float:right">
+		{{@inform}}
+		</form>
 	</p>
-	<p><span><i class="icon-time"></i> 公共时间</span> : <a href="#">{{@time[0]}}  -  {{@time[1]}} </a>; 
+	<p><span><i class="icon-time"></i> 公共时间</span> : <a href="#">{{@time[0]}}  -  {{@time[1]}} </a> 
 	</section>
 
-<form class="form-horizontal" method='post'>
-<p>
-{{@inform}}
-</p>
 
-</form>
     <section class="meta">
 	<h1>活动的参加者及他们的空闲时间</h1>
      <table class="table">
