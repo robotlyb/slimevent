@@ -89,9 +89,14 @@ class Admin	extends Service{
 	 */
 	static function reset_user_pwd($uid, $pwd)
 	{
+
+		if(strlen($pwd) < intval(F3::get('MIN_PWD_LEN')) || strlen($pwd) > intval(F3::get('MAX_PWD_LEN')))
+            return FALSE;
+			//Sys::error(F3::get('ILLEGAL_PWD_LEN'), $pwd);  //密码长度不合法
 		self::get_user($uid);
 		$sql = "UPDATE `users` SET `pwd` = :pwd WHERE `id` = :uid";
 		DB::sql($sql, array(':uid' => trim($uid), ':pwd' => self::encrypt_pwd($pwd)));
+        return TRUE;
 	}
 
 	/**
@@ -105,8 +110,6 @@ class Admin	extends Service{
 		$sql = "UPDATE `users` SET `status` = :status WHERE `id` = :uid";
 		DB::sql($sql, array(':uid' => trim($uid), ':status' => trim($status)));
 	}
-
-
 
 	/**
 	 * 修改某用户基本信息

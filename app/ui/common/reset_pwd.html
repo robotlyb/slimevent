@@ -1,0 +1,68 @@
+<script type="text/javascript">
+	function ajax_update_my_pwd()
+	{
+		$(".alert").hide();
+		$("#pwd_update").show();
+		var options = {
+			url : "{{@WEB_ROOT}}my/pwd/update",
+			type : 'POST',
+			success : function(data){
+				if(data == 0)   //更新成功
+				{
+					$(".alert").hide();
+					$("#pwd_success").fadeIn();
+                } else if(data == 1) {
+					$(".alert").hide(); //更新失败，密码长度不一样
+					$("#pwd_unsame").show();
+                } else {
+					$(".alert").hide(); //更新失败，密码长度不合格
+					$("#pwd_fail").show();
+				}
+			},
+		};
+		$("#reset-pwd-form").ajaxSubmit(options);
+	}
+</script>
+
+<h3>修改密码</h3>
+
+<div class="alert alert-info" id="pwd_update" style="display:none">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  正在努力的向服务器提交数据，请稍等...
+</div>
+
+<div class="alert alert-success" id="pwd_success" style="display:none">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  密码更新成功
+</div>
+
+<div class="alert alert-error" id="pwd_fail" style="display:none">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  更新失败,密码长度区间为：{{@MIN_PWD_LEN}} 到 {{@MAX_NAME_LEN}}
+</div>
+
+<div class="alert alert-error" id="pwd_unsame" style="display:none">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  更新失败,两次密码长度不一样
+</div>
+
+<form class="form-horizontal offset2" id="reset-pwd-form" method="post" enctype="multipart/form-data">
+
+<div class="control-group">
+
+<div class="input-append">
+  <span class="add-on">请输入新密码</span>
+  <input class="span2" id="prependedInput" name="new_pwd" type="password" >
+</div>
+<br />
+
+<div class="input-append">
+  <span class="add-on">再输入一遍吧</span>
+  <input class="span2" id="prependedInput" name="confirm_pwd" type="password" >
+</div>
+
+</div>
+
+ <button type="button" onclick="ajax_update_my_pwd();" class="btn btn-info offset3">更新一下</button>
+
+</form>

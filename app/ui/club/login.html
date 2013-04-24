@@ -1,5 +1,22 @@
 <F3:include href="common/header.html" />
 
+<div class="modal hide" id="forgetpwd-Modal">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>忘记密码</h3>
+	</div>
+	<div class="modal-body">
+		<div class="alert alert-info" style="margin-top:10px;">
+			<!--<button type="button" class="close" data-dismiss="alert">Hide</button>-->
+            <p>如果您忘记了登陆密码，请与我们联系。</p>
+			联系电话:<img src="{{@WEB_ROOT}}static/img/phone_number.png" />
+		</div><!-- alert -->
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal" >关闭</a>
+	</div>
+</div>
+
 	<div class="container">
 		<div class="row" id="login">
 			<div class="span7">
@@ -25,7 +42,7 @@
 					<div class="item">
 						<label class="login-label">密码</label>
 						<input class="input-xlarge" id="time" name="user_pwd" type="password" class="span3" >
-						<a href="{{@WEB_ROOT}}forgot-password" style="color:#999">忘记密码？</a>
+                        <a href="#forgetpwd-Modal" role="button" data-toggle="modal" style="color:#999">忘记密码？</a>
 					</div>
 
 			   <!--     <div class="item">-->

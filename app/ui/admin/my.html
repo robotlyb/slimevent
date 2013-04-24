@@ -8,6 +8,7 @@
             	<li class=""><a href="#user_management" data-toggle="tab">用户管理</a></li>
                 <li class=""><a href="#msg_box" data-toggle="tab">站内消息</a></li>
             	<li class=""><a href="#my_profile" data-toggle="tab">个人资料</a></li>
+            	<li class={{ @GET.d == 'reset_pwd' ? 'active' : ''}}><a href="#reset_pwd" data-toggle="tab">修改密码</a></li>
             </ul>
 
        		<div class="tab-content">
@@ -28,6 +29,9 @@
 					<F3:include href="admin/user_management.html" />
                 </div> <!-- my_profile -->
 
+                <div class="tab-pane {{ @GET.d == 'reset_pwd' ? 'active' : ''}}" id="reset_pwd">
+					<F3:include href="common/reset_pwd.html" />
+                </div> 
 
              </div><!-- tab-content -->
 

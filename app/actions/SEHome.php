@@ -414,6 +414,20 @@ class SEHome extends SECommon{
 			echo "0";
 	}
 
+	function ajax_update_my_pwd()
+	{
+		$uid = Account::the_user_id();
+		$new_pwd = F3::get('POST.new_pwd');
+        $confirm_pwd = F3::get('POST.confirm_pwd');
+        if($confirm_pwd != $new_pwd) {
+            echo "1"; //密码不一致
+        } else if(Admin::reset_user_pwd($uid, $new_pwd) !== TRUE) {
+            echo "2"; //密码长度不合格
+        } else {
+            echo "0"; //更新成功
+        }
+	}
+
 	function ajax_get_my_profile()
 	{
 		$uid = Account::the_user_id();
