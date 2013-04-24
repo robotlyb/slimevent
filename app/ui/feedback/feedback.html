@@ -18,7 +18,9 @@
 						</a>
 					</div>
 				</form>
-			<a href="{{@WEB_ROOT}}feedback/list">查看反馈记录</a>
+        <F3:check if="{{@COOKIE.se_user_group == @ADMIN_GROUP}}">
+		  <a href="{{@WEB_ROOT}}feedback/list">查看反馈记录</a>
+        </F3:check>
 			</div>
 
 			<div class="row" style="height:200px">

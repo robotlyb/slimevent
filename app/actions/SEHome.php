@@ -28,19 +28,6 @@ class SEHome extends SECommon{
 		Feedback::add($content);
 	}
 
-	function list_feedback(){
-		F3::set("route", array("feedback"));
-		$page = F3::get("GET.page");
-		$page = $page == null ? 0 : $page;
-
-		$list = Feedback::get_all_feedback($page);// TODO 分页
-		$total = Feedback::get_num();
-
-		SECommon::pagination($page, ceil($total / F3::get('PER_PAGE_SHOW')), 'feedback/list');
-
-		F3::set('list', $list);
-		echo Template::serve('feedback/list.html');
-	}
 
 	function show_feedback(){
 		F3::set("route", array("feedback"));
@@ -395,6 +382,7 @@ class SEHome extends SECommon{
 		else
 			echo "非法登录";
 	}
+
 	function ajax_update_my_profile()
 	{
 		$info = F3::get('POST');
