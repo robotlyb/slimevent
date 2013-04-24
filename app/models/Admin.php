@@ -140,6 +140,19 @@ class Admin	extends Service{
 		EDB::update($table, $data, 'uid', $uid);
 	}
 
+    /**
+     * 获取用户列表
+     * @param $user_cat 用户分类
+     */
+    static function get_user_list($user_cat) {
+        if($user_cat == 'all') {
+            return DB::sql("SELECT * FROM `users`");
+        } else {
+            return EDB::select('users', 'group', $user_cat);
+        }
+        return array();
+    }
+
 };
 
 ?>

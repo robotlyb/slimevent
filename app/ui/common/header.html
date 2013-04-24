@@ -3,7 +3,7 @@
 <head> 
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" /> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>{{@title}} SlimEvent</title>
+    <title>{{@title}} {{@WEB_NAME}}</title>
 
 	<!-- THEME -->
 	<link type="text/css" rel="stylesheet" href="{{@WEB_ROOT}}static/{{@COOKIE.se_theme == 'plusstrap' ? 'plusstrap' : 'bootstrap'}}/css/bootstrap.css" />
@@ -105,7 +105,7 @@
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="{{@WEB_ROOT}}">SlimEvent</a>
+                    <a class="brand" href="{{@WEB_ROOT}}">{{@WEB_NAME}}</a>
 					<ul class="nav">
 						<li {{ @route[0] == 'home' ? 'class="active"' : ''}}><a href="{{@WEB_ROOT}}"><i class="icon-home"></i> 首页</a></li>
 						<!--<li {{ @route[0] == 'discover' ? 'class="active"' : ''}}><a href="{{@WEB_ROOT}}find"><i class="icon-search"></i> 发现活动</a></li>-->
@@ -229,14 +229,14 @@
 	<div class="modal-body">
 		<div class="alert alert-info" style="margin-top:10px;">
 			<!--<button type="button" class="close" data-dismiss="alert">Hide</button>-->
-			<p>为保证用户为本校学生，需要您通用<strong><a href="https://cas.hit.edu.cn">哈工大统一身份认证系统</a></strong>进行登录。</p>
-			<p>如果您没有使用过统一身份认证系统，请点此<a href="https://cas.hit.edu.cn/active.jsp">激活您的帐号</a>。</p>
+			<p>为保证您为哈工大在校师生，需要您通过<strong><a href="https://cas.hit.edu.cn">哈工大统一身份认证系统</a></strong>进行登录。</p>
+            <p>如果您没有使用过统一身份认证系统，请点此<strong><a href="https://cas.hit.edu.cn/active.jsp">激活您的帐号</a></strong>。</p>
 		</div><!-- alert -->
 	</div>
 	<div class="modal-footer">
 		<!--<a href="#" class="btn" data-dismiss="modal" >关闭</a>-->
 		<a class="pull-right btn btn-primary" href="{{@WEB_ROOT}}login/?auth=cas&&backurl={{@GET.backurl}}">
-			<i class="icon-user"></i> 通过统一身份认证系统登录
+			<i class="icon-user"></i> 通过哈工大统一身份认证系统登录
 		</a>
 	</div>
 </div>

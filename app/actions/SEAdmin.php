@@ -36,4 +36,17 @@ class SEAdmin extends SECommon{
 		echo $r;
 	}
 
+    function ajax_get_user_list() {
+        $user_cat = F3::get('POST.type');
+        $users = Admin::get_user_list($user_cat);
+
+        for($i=0; $i<count($users); $i++) {
+            $users[$i]['first_time'] = date("Y-m-d H:i", $users[$i]['first_time']);
+            $users[$i]['last_time'] = date("Y-m-d H:i", $users[$i]['last_time']);
+        }
+
+		F3::set('users', $users);
+	    echo Template::serve("admin/user_list.html");
+	}
+
 }

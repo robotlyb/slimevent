@@ -1,0 +1,47 @@
+<script type="text/javascript">
+	function ajax_add_user()
+	{
+		var options = {
+			url : "{{@WEB_ROOT}}user/add",
+			type : 'POST',
+			success : function(data){
+					alert(data);
+			},
+		};
+		$("#add_user_form").ajaxSubmit(options);
+	}
+
+</script>
+
+<table class="table table-condensed">
+    <thead>
+        <tr>
+        <th>#</th>
+        <th>用户名</th>
+        <th>昵称</th>
+        <th>Group</th>
+        <th>注册时间</th>
+        <th>上次登录</th>
+        <th>状态</th>
+        <th>主题</th>
+        <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+ 
+<F3:repeat group="{{@users}}" value="{{@user}}" counter="{{@count}}">
+        <tr>
+            <td>{{@count}}</td>
+            <td>{{@user.name}}</td>
+            <td>{{@user.nickname}}</td>
+            <td>{{@user.group}}</td>
+            <td>{{@user.first_time}}</td>
+            <td>{{@user.last_time}}</td>
+            <td>{{@user.status}}</td>
+            <td>{{@user.theme}}</td>
+            <td>编辑</td>
+        </tr>
+</F3:repeat>
+
+    </tbody>
+</table>
