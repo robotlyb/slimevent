@@ -142,6 +142,13 @@ class SEEvent extends SECommon{
 
 	function show_create(){
 		$uid = Account::the_user_id();
+
+        /*目前只开放club用户能发布活动*/
+        $group = Account::the_user_group();
+        if($group != F3::get("CLUB_GROUP")) {
+            F3::reroute('/');
+        }
+
 		F3::set("title", "创建活动");
 		$region = F3::get("REGION");
 		$category = Category::get_all();

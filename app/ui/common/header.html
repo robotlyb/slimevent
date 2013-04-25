@@ -35,6 +35,12 @@
 
 	function create_event()
 	{
+        //先只开放社团用户发布活动
+        if("{{@COOKIE.se_user_group}}" != "{{@CLUB_GROUP}}" && "{{@COOKIE.se_user_group}}" != "") {
+            alert("啥事都是循序渐进滴，目前只开放社团用户发布活动，请君稍安勿躁。");
+            return;
+        }
+
 		if("{{@COOKIE.se_user_id}}" === "")
 			window.location="{{@WEB_ROOT}}login?backurl="+encodeURIComponent("{{@WEB_URL}}{{@WEB_ROOT}}create".replace(/http:\/\//, ''));
 		else
