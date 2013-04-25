@@ -272,6 +272,10 @@ class SEHome extends SECommon{
 
 	function show_login()
 	{
+        if(Account::is_login() != FALSE){
+		    F3::reroute("/");  //已登录则不显示登陆页面
+        }
+
 		$backurl = urlencode(F3::get('GET.backurl'));
 		switch(F3::get('GET.auth'))
 		{

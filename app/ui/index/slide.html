@@ -10,7 +10,7 @@
 
 				<div class="hero-unit" style="background-color:rgba(212, 235, 253, 0.56);">
                     <h2 style="text-align:center">欢迎使用 {{@WEB_NAME}}</h2>
-					<p style="text-align:center">全面、及时、便捷的获取哈工大校内活动</p>
+					<p style="text-align:center">全面、及时、便捷地获取哈工大校内活动</p>
 					<p style="text-align:right">公测中</p>
 				</div>
 
@@ -25,12 +25,11 @@
 	<F3:repeat group="{{@hot_events}}" value="{{@e}}" counter="{{@c}}">
 		<F3:check if="{{@c % @SLIDE.PER_PAGE_SHOW == 1}}"> 
 			<div class='item'>
-				<div class="title">
+				<div class="title" style="padding-top:20px">
 					<h4>热门活动</h4>
 				</div>
-				<div class="content">
+				<div class="content" style="margin-top:-20px">
 		</F3:check>
-		
 				<div class="item-item poster">
 					<a href="{{@WEB_ROOT}}event/{{@e.eid}}">
 					<img src="{{@WEB_ROOT}}{{@THUMB_IMG_DIR}}{{@e.poster}}" />
@@ -48,8 +47,8 @@
 
 	</div>
 	<!-- Carousel nav -->
-	<a class="carousel-control left" href="#index-carousel" style="top:50%" data-slide="prev">&lsaquo;</a>
-	<a class="carousel-control right" href="#index-carousel" style="top:50%" data-slide="next">&rsaquo;</a>
+	<a class="carousel-control left" href="#index-carousel" style="top:60%" data-slide="prev">&lsaquo;</a>
+	<a id="next-slide" class="carousel-control right" href="#index-carousel" style="top:60%" data-slide="next">&rsaquo;</a>
 </div>
 
 <script type="text/javascript">
@@ -58,6 +57,10 @@
 		$(".e-title a").each(function(){
 			sliceCharacters($(this), 24);
 		});
+
+        $('.carousel').carousel({
+            interval: 6000`
+        });
 	});
 
 </script>

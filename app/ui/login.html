@@ -6,19 +6,18 @@
 				<div class="span6">
 					<h2> 学生登录 </h3>
 
-					<a class="btn btn-large btn-danger" href="{{@WEB_ROOT}}login/?auth=cas&&backurl={{@GET.backurl}}">
-						<i class="icon-user"></i> 通过哈工大统一身份认证登录
+					<a class="btn btn-large btn-primary" href="{{@WEB_ROOT}}login/?auth=cas&&backurl={{@GET.backurl}}">
+						<i class="icon-user"></i> 通过哈工大统一身份认证系统登录
 					</a>
 					<div class="alert alert-info" style="margin-top:10px;">
-						<!--<button type="button" class="close" data-dismiss="alert">Hide</button>-->
-						为保证登录您为哈工大在校师生，请您使用<strong>哈工大统一身份认证系统登录</strong>。
-                        如果您没有使用过统一身份认证系统，请点此<a href="https://cas.hit.edu.cn/active.jsp"><strong>激活您的帐号</strong></a>。
+                        <p>为保证您为哈工大在校师生，需要您通过<strong><a href="{{@WEB_ROOT}}login/?auth=cas&&backurl={{@GET.backurl}}" >哈工大统一身份认证系统</a></strong>进行登录。</p>
+                        <p>如果您没有使用过统一身份认证系统，请点此<strong><a href="https://cas.hit.edu.cn/active.jsp">激活您的帐号</a></strong>。</p>
 					</div><!-- alert -->
 				</div><!-- span6 -->
 
 				<div class="span6">
 					<h2> 社团登录 </h2>
-					<form id="login_form" class="form-horizontal" method="POST">
+					<form onsubmit="ajax_login(); return false;"id="login_form" class="form-horizontal" method="POST">
 
 						<F3:check if="{{@show_msg}}">
 							<F3:true>
@@ -44,15 +43,13 @@
 
 					  	<div class="control-group">
 							<div class="controls">
-							  	<button type="button" onclick="ajax_login()" class="btn btn-primary">登录</button>
+							  	<button type="button" onclick="ajax_login()" class="btn btn-danger">登录</button>
 							</div>
 					 	</div>
 
 					</form>
 
-				<p>还没有社团帐号？请与我们联系.
-				电话:<img src="{{@WEB_ROOT}}static/img/phone_number.png" />
-				</p>
+                    <pre>      还没有社团帐号？请与我们联系:<img src="{{@WEB_ROOT}}static/img/phone_number.png" /> </pre>
 				</div><!-- span6 -->
 
 			</div><!-- row -->
