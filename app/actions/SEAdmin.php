@@ -41,8 +41,8 @@ class SEAdmin extends SECommon{
         $users = Admin::get_user_list($user_cat);
 
         for($i=0; $i<count($users); $i++) {
-            $users[$i]['first_time'] = date("Y-m-d H:i", $users[$i]['first_time']);
-            $users[$i]['last_time'] = date("Y-m-d H:i", $users[$i]['last_time']);
+            $users[$i]['first_time'] = date("m-d H:i", $users[$i]['first_time']);
+            $users[$i]['last_time'] = date("m-d H:i", $users[$i]['last_time']);
         }
 
 		F3::set('users', $users);

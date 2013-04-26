@@ -207,6 +207,9 @@ class SECommon{
 		$info['begin_remain_day'] = $this->get_remain_day($info['begin_date']);
 		$info['end_remain_day'] = $this->get_remain_day($info['end_date']);
 
+		$info['begin_date'] = date("m-d ", $info['begin_time']);
+		$info['end_date'] = date("m-d ", $info['end_time']);
+
 		//开始结束具体时间 小时分钟
 		$info['begin_time'] = date("H:i", $info['begin_time']);
 		$info['end_time'] = date("H:i", $info['end_time']);
@@ -222,10 +225,11 @@ class SECommon{
 		}
 
 		//活动创建时间
-		$info['post_time'] = date("Y-m-d H:i:s", $info['post_time']);
+		$info['post_time'] = date("m-d H:i", $info['post_time']);
 
 		//已结束 未开始 进行中
 		$info['time_status'] = $this->get_time_status($info['a_begin_time'],$info['a_end_time']);
+
 
 		return $info;
 	}

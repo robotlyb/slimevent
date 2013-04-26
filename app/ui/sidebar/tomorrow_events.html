@@ -1,0 +1,20 @@
+<div class="entry">
+	<div class="title">
+		<legend>明日活动</legend>
+		<span>
+            <a href="{{@WEB_ROOT}}find/by?word=-&key=keyword&time=all&order=begin&range=tomorrow">>>更多</a>
+		</span>
+	</div>
+	<div class="content">
+		<ul>
+		<F3:repeat group="{{@tomorrow_events}}" value="{{@e}}">
+			<li>
+				<span class="title"><a href="{{@WEB_ROOT}}event/{{@e.eid}}">{{@e.title}}</a></span>
+				<span class="organizer pull-right">
+					<a href="{{@WEB_ROOT}}user/{{@e.eid}}">{{@e.organizer}}</a>
+				</span>
+			</li>
+		</F3:repeat>
+		</ul>
+	</div>
+</div>

@@ -27,7 +27,9 @@
 
 <div class="entry">
 	<div class="title">
-		<legend>{{@e.organizer}} 发布的其他活动</legend>
+        <legend>
+		该社团发布的其他活动
+        </legend>
 		<span>
 			<!--<a href="{{@WEB_ROO}}find/by?category={{@block.id}}">>>更多</a>-->
 		</span>
@@ -35,28 +37,6 @@
 	<div class="content">
 		<ul>
 		<F3:repeat group="{{@other_events}}" value="{{@e}}">
-			<li>
-				<span class="title"><a href="{{@WEB_ROOT}}event/{{@e.eid}}">{{@e.title}}</a></span>
-				<span class="organizer pull-right">
-					<a href="{{@WEB_ROOT}}user/{{@e.eid}}">{{@e.organizer}}</a>
-				</span>
-			</li>
-		</F3:repeat>
-		</ul>
-	</div>
-</div>
-
-
-<div class="entry">
-	<div class="title">
-		<legend>可能喜欢的活动</legend>
-		<span>
-			<!--<a href="{{@WEB_ROO}}find/by?category={{@block.id}}">>>更多</a>-->
-		</span>
-	</div>
-	<div class="content">
-		<ul>
-		<F3:repeat group="{{@guess_events}}" value="{{@e}}">
 			<li>
 				<span class="title"><a href="{{@WEB_ROOT}}event/{{@e.eid}}">{{@e.title}}</a></span>
 				<span class="organizer pull-right">

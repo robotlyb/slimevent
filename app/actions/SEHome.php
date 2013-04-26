@@ -55,22 +55,26 @@ class SEHome extends SECommon{
 		// 时间范围
 		$value = F3::get("GET.range");
 		if($value != null && $value != "all"){
-			$now = time();
+
 			$a_day = 60 * 60 * 24;
-			$a_week = $a_day * 7;
-			$today_date = floor($now / $a_day);
-			$tonight= ($today_date + 1) * $a_day;
+            $yesterday = strtotime("yesterday");
+            $today = strtotime("today");
+            $tomorrow = strtotime("tomorrow");
+            $day_after_tomorrow = $tomorrow + $a_day;
+			$week = $today + 8 * $a_day;
+            
 			switch($value){
 				case 'today':
-					$con .= "`begin_time` < $tonight AND `begin_time` > $now AND ";
+                    //改为与今天有交集
+					$con .= "(`begin_time` < $tomorrow AND `begin_time` > $today OR $today > `begin_time` AND $today < `end_time`) AND ";
 					break;
 				case 'tomorrow':
-					$tomorrow = ($today_date + 2) * $a_day;
-					$con .= "`begin_time` < $tomorrow AND `begin_time` > $tonight AND ";
+                    //改为与明天有交集
+					$con .= "(`begin_time` < $day_after_tomorrow AND `begin_time` > $tomorrow OR $tomorrow > `begin_time` AND $tomorrow < `end_time`) AND ";
 					break;
 				case 'week':
-					$week = ($today_date + 8) * $a_day;
-					$con .= "`begin_time` < $week AND `begin_time` > $now AND ";
+                    //改为与未来7天有交集
+					$con .= "(`begin_time` < $week AND `begin_time` > $tomorrow OR $tomorrow > `begin_time` AND $tomorrow < `end_time`) AND ";
 					break;
 				case 'weedend':
 					break;
@@ -166,7 +170,7 @@ class SEHome extends SECommon{
 
 		switch($order){
 			case "begin":
-				$con .= " ORDER BY event.begin_time DESC";
+				$con .= " ORDER BY event.begin_time ASC";
 				break;
 			case "post":
 				$con .= " ORDER BY event.post_time DESC";
@@ -188,6 +192,32 @@ class SEHome extends SECommon{
 		return $this->filter($r);
 	}
 
+    /*
+     * select 侧栏显示的event
+     */
+    function get_side_events() {
+		$event = new SEEvent();
+
+		$event->show_by("", '`event`.`status` = :e ORDER BY RAND() DESC',
+			array(':e' => F3::get("EVENT_PASSED_STATUS")), 'guess_events', 5);
+
+		$a_day = 60 * 60 * 24;
+        $yesterday = strtotime("yesterday");
+        $today = strtotime("today");
+        $tomorrow = strtotime("tomorrow");
+        $day_after_tomorrow = $tomorrow + $a_day;
+		$week = $today + 8 * $a_day;
+            
+        $event->show_by("", "`event`.`status` = :e AND (`begin_time` < $tomorrow AND `begin_time` > $today OR $today > `begin_time` AND $today < `end_time`) ORDER BY `begin_time` ASC",
+			array(':e' => F3::get("EVENT_PASSED_STATUS")), 'today_events', 5);
+
+        $event->show_by("", "`event`.`status` = :e AND (`begin_time` < $day_after_tomorrow AND `begin_time` > $tomorrow OR $tomorrow > `begin_time` AND $tomorrow < `end_time`) ORDER BY `begin_time` ASC",
+			array(':e' => F3::get("EVENT_PASSED_STATUS")), 'tomorrow_events', 5);
+        
+        $event->show_by("", "`event`.`status` = :e AND (`begin_time` < $week AND `begin_time` > $tomorrow OR $tomorrow > `begin_time` AND $tomorrow < `end_time`) ORDER BY `begin_time` ASC",
+			array(':e' => F3::get("EVENT_PASSED_STATUS")), 'week_events', 5);
+    }
+
 	function find(){
 
 		$key = F3::get("GET.key");
@@ -203,16 +233,10 @@ class SEHome extends SECommon{
 		foreach(F3::get("GET") as $key => $v)
 			$url .= "{$key}={$v}&";
 
-		//Code::dump($data);
-		//Code::dump($url);
 		$event = new SEEvent();
 		$result_num = $event->show_by($url, $data['con'], $data['array'], 'events');
 
-		$event->show_by("", '`event`.`status` = :e ORDER BY RAND() DESC',
-			array(':e' => F3::get("EVENT_PASSED_STATUS")), 'guess_events', 5);
-
-		$event->show_by("", '`event`.`status` = :e ORDER BY `post_time` DESC',
-			array(':e' => F3::get("EVENT_PASSED_STATUS")), 'newst_events', 5);
+        $this->get_side_events();
 
 		F3::set('note', $data['note']);
 		F3::set('result_num', $result_num);
@@ -231,33 +255,29 @@ class SEHome extends SECommon{
 		$category = Category::get_all();
 		F3::set("category", $category);
 		$event = new SEEvent();
-		$event->show_by("", '`event`.`status` = :e ORDER BY RAND() DESC',
-			array(':e' => F3::get("EVENT_PASSED_STATUS")), 'guess_events', 5);
 
-		$event->show_by("", '`event`.`status` = :e ORDER BY `post_time` DESC',
-			array(':e' => F3::get("EVENT_PASSED_STATUS")), 'newst_events', 5);
-		//Code::dump(F3::get('guess_events'));
+        $this->get_side_events();
+
 		F3::set("route", array("discover"));
 		echo Template::serve('find/find.html');
 	}
-
 
 	function run()
 	{
 		$event = new SEEvent();
 
-		$event->show_by("", '', array(), 'hot_events', 4);
-
-		foreach(F3::get("INDEX_BLOCK") as $b){
-			$event->show_by("", $b['con'].' = :c AND `event`.`status` = :e',
-				array(':c' => $b['value'], ':e' => F3::get("EVENT_PASSED_STATUS")), 'event.'.$b["name"], 4);
-		}
-
-		$event->show_by("", '`event`.`status` = :e ORDER BY RAND() DESC',
-			array(':e' => F3::get("EVENT_PASSED_STATUS")), 'guess_events', 5);
+		$event->show_by("", '`event`.`status` = :e ORDER BY `praiser_num` DESC',
+			array(':e' => F3::get("EVENT_PASSED_STATUS")), 'hot_events', 4);
 
 		$event->show_by("", '`event`.`status` = :e ORDER BY `post_time` DESC',
-			array(':e' => F3::get("EVENT_PASSED_STATUS")), 'newst_events', 5);
+			array(':e' => F3::get("EVENT_PASSED_STATUS")), 'newst_events', 4);
+
+		foreach(F3::get("INDEX_BLOCK") as $b){
+			$event->show_by("", $b['con'].' = :c AND `event`.`status` = :e AND `event`.`end_time` > :now ORDER BY `begin_time`',
+				array(':c' => $b['value'], ':e' => F3::get("EVENT_PASSED_STATUS"), ':now' => time()), 'event.'.$b["name"], 4);
+		}
+
+        $this->get_side_events();
 		
 		echo Template::serve('index.html');
 	}

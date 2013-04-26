@@ -22,6 +22,31 @@
 		<!--<F3:include href="index/slide-items.html" />-->
 
 	<!-- items -->
+	<F3:repeat group="{{@newst_events}}" value="{{@e}}" counter="{{@c}}">
+		<F3:check if="{{@c % @SLIDE.PER_PAGE_SHOW == 1}}"> 
+			<div class='item'>
+				<div class="title" style="padding-top:20px">
+					<h4>最新发布</h4>
+				</div>
+				<div class="content" style="margin-top:-20px">
+		</F3:check>
+				<div class="item-item poster">
+					<a href="{{@WEB_ROOT}}event/{{@e.eid}}">
+					<img src="{{@WEB_ROOT}}{{@THUMB_IMG_DIR}}{{@e.poster}}" />
+					</a>
+					<div class="e-title">
+						<a href="{{@WEB_ROOT}}event/{{@e.eid}}">{{@e.title}}</a>
+					</div>
+				</div>
+
+		<F3:check if="{{@c % @SLIDE.PER_PAGE_SHOW == 0 || @c == count(@hot_events)}}">
+				</div>
+			</div>
+		</F3:check>
+	</F3:repeat>
+
+
+	<!-- items -->
 	<F3:repeat group="{{@hot_events}}" value="{{@e}}" counter="{{@c}}">
 		<F3:check if="{{@c % @SLIDE.PER_PAGE_SHOW == 1}}"> 
 			<div class='item'>
