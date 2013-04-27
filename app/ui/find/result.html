@@ -68,7 +68,7 @@
 							<ul>
 								<li><a href="#region-all">全部校区</a></li>
 								<F3:repeat group="{{@REGION}}" key="{{@k}}" value="{{@c}}">
-								<li><a href="#region-{{@k}}">{{@c}}</a></li>
+								<li><a href="#region-{{@c}}">{{@c}}</a></li>
 							</F3:repeat>
 							</ul>
 						</div>
@@ -91,8 +91,9 @@
 						<div class="filter-list">
 							<ul>
 								<li><a href="#time-all">全部状态</a></li>
-								<li><a href="#time-{{@EVENT_NOT_BEGIN}}">未开始</a></li>
-								<li><a href="#time-{{@EVENT_IS_RUNNING}}">正在进行</a></li>
+								<li><a href="#time-{{@EVENT_NOT_END}}">未结束</a></li> 
+                                <!--<li><a href="#time-{{@EVENT_NOT_BEGIN}}">未开始</a></li>-->
+                                <!--<li><a href="#time-{{@EVENT_IS_RUNNING}}">正在进行</a></li>-->
 								<li><a href="#time-{{@EVENT_HAVE_END}}">已结束</a></li>
 							</ul>
 						</div>

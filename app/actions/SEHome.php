@@ -49,7 +49,13 @@ class SEHome extends SECommon{
 		$value = F3::get("GET.region");
 		if($value != null && $value != "all"){
 			$con .= " `event`.`region` = :region AND ";
-			$data[':region'] = $value;
+            if($value == F3::get('REGION.1')) {
+			    $data[':region'] = '1'; 
+            } else if($value == F3::get('REGION.2')) {
+                $data[':region'] = '2';
+            } else {
+                $data[':region'] = '3';
+            }
 		}
 
 		// 时间范围
@@ -88,7 +94,9 @@ class SEHome extends SECommon{
 		//Code::dump($value);
 		if($value != null && $value != "all"){
 			$now = time();
-			if($value == F3::get('EVENT_NOT_BEGIN'))  //尚未开始
+			if($value == F3::get('EVENT_NOT_END'))  //未结束
+				$con .= "`end_time` > $now AND ";
+            else if($value == F3::get('EVENT_NOT_BEGIN'))  //尚未开始
 				$con .= "`begin_time` > $now AND ";
 			else if($value == F3::get('EVENT_IS_RUNNING'))   //进行中
 				$con .= "`begin_time` < $now AND `end_time` > $now AND ";
@@ -126,40 +134,42 @@ class SEHome extends SECommon{
 				$word = '%'.$word.'%';
 				$data = array(':b'=>$word, ':s'=>F3::get("EVENT_PASSED_STATUS"));
 				break;
-			case 'category_id':
-			case 'category':
-				$con = "category_id = :a ";
-				$c = Category::get_name($word);
-				//$note .= "类别:<span class='label label-inverse'>{$c}</span>";
-				break;
-			case 'organizer_id':
-			case 'organizer':
-				$con = "organizer_id = :a ";
-				$info = Account::get_user($word);
-				$note .= "根据主办(发起):<span class='label label-inverse'>{$info['nickname']}</label>";
-				break;
-			case 'region':
-				$con = "region = :a ";
-				$region = F3::get("REGION");
-				//$note .= "校区:<strong>{$region[$word]}</strong>";
-				break;
-			case 'time_status':
-			case 'time':
-				$now = time();
-				if($word == F3::get('EVENT_NOT_BEGIN'))  //尚未开始
-					$con = "`begin_time` > $now ";
-				else if($word == F3::get('EVENT_IS_RUNNING'))   //进行中
-					$con = "`begin_time` < $now AND `end_time` > $now";
-				else  //已结束
-					$con = "`end_time` < $now ";
-				$data = array();
-				//$note .= "时间状态:<strong>{$word}</strong>";
-				break;
-			case '':
-				$con = "eid = :a ";
-				break;
-			default:
-				$con = "eid = :a ";
+			//case 'category_id':
+			//case 'category':
+				//$con = "category_id = :a ";
+				//$c = Category::get_name($word);
+				////$note .= "类别:<span class='label label-inverse'>{$c}</span>";
+				//break;
+			//case 'organizer_id':
+			//case 'organizer':
+				//$con = "organizer_id = :a ";
+				//$info = Account::get_user($word);
+				//$note .= "根据主办(发起):<span class='label label-inverse'>{$info['nickname']}</label>";
+				//break;
+			//case 'region':
+				//$con = "region = :a ";
+				//$region = F3::get("REGION");
+				////$note .= "校区:<strong>{$region[$word]}</strong>";
+				//break;
+			//case 'time_status':
+			//case 'time':
+				//$now = time();
+				//if($word == F3::get('EVENT_NOT_END'))  //未结束
+					//$con = "`end_time` > $now ";
+                //else if($word == F3::get('EVENT_NOT_BEGIN'))  //尚未开始
+                    //$con = "`begin_time` > $now ";
+				//else if($word == F3::get('EVENT_IS_RUNNING'))   //进行中
+                    //$con = "`begin_time` < $now AND `end_time` > $now ";
+				//else  //已结束
+                    //$con = "`end_time` < $now ";
+				//$data = array();
+				////$note .= "时间状态:<strong>{$word}</strong>";
+				//break;
+			//case '':
+				//$con = "eid = :a ";
+				//break;
+			//default:
+				//$con = "eid = :a ";
 		}
 
 		//if($order != null && stripos($con, 'status') === false){
@@ -168,23 +178,39 @@ class SEHome extends SECommon{
 			$data[':s'] = F3::get("EVENT_PASSED_STATUS");
 		}
 
+        $category_id = F3::get('GET.category');
+		if($category_id) {
+            $con .= "AND `category_id` = $category_id";
+        }
+
 		switch($order){
 			case "begin":
-				$con .= " ORDER BY event.begin_time ASC";
+				$con .= " ORDER BY event.begin_time";
 				break;
 			case "post":
-				$con .= " ORDER BY event.post_time DESC";
+				$con .= " ORDER BY event.post_time";
 				break;
 			case "praiser":
-				$con .= " ORDER BY event.praiser_num DESC";
+				$con .= " ORDER BY event.praiser_num";
 				break;
 			case "joiner":
-				$con .= " ORDER BY event.joiner_num DESC";
+				$con .= " ORDER BY event.joiner_num";
 				break;
 			default:
-				$con .= " ORDER BY event.begin_time DESC";
+				$con .= " ORDER BY event.begin_time";
 				break;
 		}
+        switch(F3::get('GET.by')) {
+			case "asc":
+				$con .= " ASC";
+				break;
+			case "desc":
+				$con .= " DESC";
+				break;
+            default:
+				$con .= "  DESC";
+				break;
+        }
 
 		$r = array('con'=>$con,'array'=>$data, 'note'=>$note);
 
@@ -228,6 +254,7 @@ class SEHome extends SECommon{
 		$word = $word == '' ? '-' : $word;
 
 		$data = $this->find_by($key, $word, $order);
+        //Code::dump($data);
 
 		$url = "find/by?";
 		foreach(F3::get("GET") as $key => $v)
@@ -266,15 +293,18 @@ class SEHome extends SECommon{
 	{
 		$event = new SEEvent();
 
+        /*首页滚动的热门活动*/
 		$event->show_by("", '`event`.`status` = :e ORDER BY `praiser_num` DESC',
 			array(':e' => F3::get("EVENT_PASSED_STATUS")), 'hot_events', 4);
 
+        /*首页滚动的最新活动*/
 		$event->show_by("", '`event`.`status` = :e ORDER BY `post_time` DESC',
 			array(':e' => F3::get("EVENT_PASSED_STATUS")), 'newst_events', 4);
 
+        /*首页各类别显示的活动*/
 		foreach(F3::get("INDEX_BLOCK") as $b){
-			$event->show_by("", $b['con'].' = :c AND `event`.`status` = :e AND `event`.`end_time` > :now ORDER BY `begin_time`',
-				array(':c' => $b['value'], ':e' => F3::get("EVENT_PASSED_STATUS"), ':now' => time()), 'event.'.$b["name"], 4);
+			$event->show_by("", $b['con'].' = :c AND `event`.`status` = :e ORDER BY `begin_time` DESC',
+				array(':c' => $b['value'], ':e' => F3::get("EVENT_PASSED_STATUS")), 'event.'.$b["name"], 4);
 		}
 
         $this->get_side_events();

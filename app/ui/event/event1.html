@@ -50,7 +50,7 @@
 					</F3:check>
 
 					<F3:check if="{{@e.status==@EVENT_PASSED_STATUS}}">
-						<a href="{{@WEB_ROOT}}find/by?key=time_status&word={{@e.time_status}}">
+                        <a href="{{@FIND_BY_STATUS_URL}}{{@e.time_status}}">
 						<F3:check if="{{@e.time_status==@EVENT_NOT_BEGIN}}">
 							<span class="label label-info">{{@e.time_status}}</span>
 						</F3:check>
@@ -90,24 +90,11 @@
 						</div>
 
 						<div id="event-place" class="event-item">
-							<!-- 一校区 -->
-							<F3:check if="{{@e.region == @REGION.1}}">
-							<span><i class="icon-map-marker"></i> 地点</span> : <a href="{{@WEB_ROOT}}find/by?key=region&word=1">{{@e.region}}</a> {{@e.addr}}
-							</F3:check>
-
-							<!-- 二校区 -->
-							<F3:check if="{{@e.region == @REGION.2}}">
-							<span><i class="icon-map-marker"></i> 地点</span> : <a href="{{@WEB_ROOT}}find/by?key=region&word=2">{{@e.region}}</a> {{@e.addr}}
-							</F3:check>
-
-							<!-- 建筑校区 -->
-							<F3:check if="{{@e.region == @REGION.3}}">
-							<span><i class="icon-map-marker"></i> 地点</span> : <a href="{{@WEB_ROOT}}find/by?key=region&word=3">{{@e.region}}</a> {{@e.addr}}
-							</F3:check>
+                            <span><i class="icon-map-marker"></i> 地点</span> : <a href="{{@FIND_BY_REGION_URL}}{{@e.region}}">{{@e.region}}</a> {{@e.addr}}
 						</div>
 						<div id="event-category" class="event-item">
 							<span><i class="icon-reorder"></i> 类型</span> : 
-							<a href="{{@WEB_ROOT}}find/by?key=category_id&word={{@e.category_id}}">{{@e.category}}</a>
+                            <a href="{{@FIND_BY_CAT_URL}}{{@e.category_id}}">{{@e.category}}</a>
 						</div>
 						<div id="event-owner" class="event-item">
 							<span><i class="icon-user"></i> 发起者</span> : <a href="{{@WEB_ROOT}}user/{{@e.organizer_id}}">{{@e.organizer}}</a>
@@ -115,12 +102,10 @@
 						<div id="event-category" class="event-item">
 							<span><i class="icon-tags"></i> 标签</span> : 
 						<F3:repeat group="{{@e.label}}" value="{{@v}}">
-							<a href="{{@WEB_ROOT}}find/by?key=label&word={{@v}}">{{@v}}</a>
+                            <a href="{{@FIND_BY_LABEL_URL}}{{@v}}">{{@v}}</a>
 						</F3:repeat>
 						</div>
 					</div><!-- event-items -->
-
-		
 
 				</div><!--span7-->
 
