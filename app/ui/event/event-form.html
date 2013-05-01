@@ -60,7 +60,6 @@
 
 </div>
 
-
 <div class="control-group">
 <!-- Appended input-->
 	<label class="control-label">结束时间</label>
@@ -75,7 +74,6 @@
 		<span class="label" style="margin-left:10px">结束时间须大于开始时间</span>
 	</div>
 </div>
-
 
 <div class="control-group">
 <!-- Select Basic -->
@@ -115,7 +113,6 @@
 	<input type="hidden" name="eid" value="{{@POST.eid}}"/>
 	<input type="hidden" name="poster_change" value="0"/>
 
-
 <fieldset>
 	<legend>上传海报
 	<span class="label" style="margin-left:10px">为了让您的图片更好的显示，建议您上传（高:宽=4:3) 的图片</span>
@@ -143,30 +140,31 @@
 
 <fieldset>
 	<legend>活动详情</legend>
-	<textarea id="content" class="validate-required input-xlarge" style="width:90%;height:250px;" name="introduction">{{@POST.introduction}}</textarea>
 
+	<textarea id="kindeditor" class="input-xlarge" style="width:700px;height:250px;visibility:hidden;" name="introduction">{{@POST.introduction}}</textarea>
 </fieldset>
 
-<!--<fieldset>-->
-	<!--<legend>发布选项</legend>-->
-	<!--<div class="control-group">-->
-		<!--<label class="control-label">SNS同步</label>-->
-		<!--<div class="controls">-->
-			<!--<label><input type="checkbox" /> 同步到新浪微博</label>-->
-			<!--<label><input type="checkbox" /> 同步到腾讯微博</label>-->
-			<!--<label><input type="checkbox" /> 同步到人人网</label>-->
-			<!--<label><input type="checkbox" /> 同步到Google+</label>-->
-		<!--</div>-->
-	<!--</div>-->
-<!--</fieldset>-->
-
-</form>
+	<link rel="stylesheet" href="{{@WEB_ROOT}}static/kindeditor/themes/default/default.css" />
+	<link rel="stylesheet" href="{{@WEB_ROOT}}static/kindeditor/plugins/code/prettify.css" />
+	<script charset="utf-8" src="{{@WEB_ROOT}}static/kindeditor/kindeditor.js"></script>
+	<script charset="utf-8" src="{{@WEB_ROOT}}static/kindeditor/lang/zh_CN.js"></script>
+	<script charset="utf-8" src="{{@WEB_ROOT}}static/kindeditor/plugins/code/prettify.js"></script>
+	<script>
+        var kindeditor;
+		KindEditor.ready(function(K) {
+			kindeditor = K.create('textarea[name="introduction"]', {
+				cssPath : '{{@WEB_ROOT}}static/kindeditor/plugins/code/prettify.css',
+				uploadJson : '{{@WEB_ROOT}}static/kindeditor/php/upload_json.php',
+				fileManagerJson : '{{@WEB_ROOT}}static/kindeditor/php/file_manager_json.php',
+				allowFileManager : false
+			});
+			prettyPrint();
+		});
+	</script>
 
 <script src="{{@WEB_ROOT}}static/js/jquery.form.js" type="text/javascript"></script>
 
-<!--<script src="{{@WEB_ROOT}}static/js/jquery.validform-zh_CN.js" type="text/javascript" charset="utf8"></script>-->
 <script src="{{@WEB_ROOT}}static/js/validform.js" type="text/javascript"></script>
-<!--<link type="text/css" rel="stylesheet" href="{{@WEB_ROOT}}static/css/validform.css" />-->
 
 <script src="{{@WEB_ROOT}}static/js/bootstrap-fileupload.js" type="text/javascript"></script>
 <link type="text/css" rel="stylesheet" href="{{@WEB_ROOT}}static/css/fileupload.css" />
@@ -177,26 +175,11 @@
 <script src="{{@WEB_ROOT}}static/js/bootstrap-datepicker.js" type="text/javascript"></script>
 <link type="text/css" rel="stylesheet" href="{{@WEB_ROOT}}static/css/datepicker.css" />
 
-<script src="{{@WEB_ROOT}}static/editor/scripts/innovaeditor.js" type="text/javascript"></script>
-<script src="{{@WEB_ROOT}}static/editor/scripts/innovamanager.js" type="text/javascript"></script>
-
 <script type="text/javascript">
 
 	var hasSaved = false;
 	
 	$(document).ready(function () {
-
-		$('#content').liveEdit({
-			css: ['{{@WEB_ROOT}}static/bootstrap/css/bootstrap.min.css', '{{@WEB_ROOT}}static/bootstrap/bootstrap_extend.css'],
-			groups: [
-				["group1", "", ["Paragraph", "FontSize", "Bold", "Italic", "Underline", "ForeColor", "RemoveFormat"]],
-				["group2", "", ["Bullets", "Numbering", "Indent", "Outdent"]],
-				["group3", "", ["LinkDialog", "ImageDialog", "TableDialog", "Emoticons", "Snippets"]],
-				["group4", "", ["Undo", "Redo", "FullScreen" ]]
-				] /* Toolbar configuration */
-		});
-
-		//$('.date-picker').datepicker("setFromat", "YYYY-MM-DD");
 		$('.date-picker').datepicker({
 			format:'yyyy-mm-dd',weekStart:1
 			});
@@ -213,14 +196,7 @@
 				$("input[name='poster_change']").attr('value', '1');
 			})
 
-		$('#content').data('liveEdit').startedit(); /* Run the Editor */
-
 		$("input[name='title']").focus();
-
-//		$(window).bind('beforeunload',function(){ 
-//			if(!hasSaved)
-//				return '您输入的内容尚未保存，确定离开此页面吗？'; 
-//			});
 
 		$("input[name='begin_date']").blur(function(){
 				var end = $("input[name='end_date']");
@@ -236,12 +212,9 @@
 
 	});
 
-
 	//把编辑器中的内容放到表单项中，然后验证表单正确性
     function getIntroAndValidate() {
-		var sHtml = $('#content').data('liveEdit').getXHTMLBody(); //Use before finishedit()
-		$('#content').data('liveEdit').finishedit();
-		$('#content').html(sHtml);
+        kindeditor.sync();
 		if(validate() == false){
 			//scroll(0, 100);// 跳回页首
 			pageScroll();
@@ -259,7 +232,6 @@
 			clearTimeout(scrolldelay);
 	}
 
-
 	// 根据返回的eid更新表单中的隐藏字段
 	function updateForm(eid){
 		$("input[name='eid']").attr('value', eid);
@@ -271,6 +243,4 @@
 	}
 
 </script>
-
-
 
