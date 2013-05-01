@@ -198,6 +198,8 @@ class SECommon{
 		//开始结束时间年月日
 		$info['begin_date'] = date("Y-m-d ", $info['begin_time']);
 		$info['end_date'] = date("Y-m-d ", $info['end_time']);
+		$info['full_begin_date'] = date("Y-m-d ", $info['begin_time']);
+		$info['full_end_date'] = date("Y-m-d ", $info['end_time']);
 
 		//开始结束星期几 
 		$info['begin_weekday'] = F3::get("WEEKDAY.".date("w",strtotime($info['begin_date'])));

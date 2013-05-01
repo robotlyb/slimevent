@@ -49,7 +49,7 @@
 	<label class="control-label">开始时间</label>
 	<div class="controls">
 		<input class="validate-date-before-now span2 date-picker" placeholder="日期" type="text" 
-			name="begin_date" value="{{@POST.begin_date}}">
+			name="begin_date" value="{{@POST.full_begin_date}}">
 		<i class="icon-calendar icon-large" style="margin: 6px 0 0 -24.5px; pointer-events: none; position: relative;"></i>
 
 		<input class="validate-required validate-time-order span2" placeholder="时间" type="text" name="begin_time"
@@ -66,7 +66,7 @@
 	<label class="control-label">结束时间</label>
 	<div class="controls">
 		<input class="span2 date-picker" placeholder="日期" type="text" 
-			name="end_date" value="{{@POST.end_date}}">
+			name="end_date" value="{{@POST.full_end_date}}">
 		<i class="icon-calendar icon-large" style="margin: 6px 0 0 -24.5px; pointer-events: none; position: relative;"></i>
 
 		<input class="validate-required validate-time-order span2 end-time" placeholder="时间" type="text"
