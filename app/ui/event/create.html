@@ -30,18 +30,14 @@
 </div><!-- row -->
 </div><!-- Container -->
 <script type="text/javascript">
+	var hasSubmit = false;
 	function publish(){
-		/*
-		var options = {
-			target : '#tip',
-			url : "{{@WEB_ROOT}}audit",
-			type : 'POST',
-			success : function(eid){alert(eid);update_form(eid);}
+		if(hasSubmit){
+			return false;
 		}
-		$("#create-form").ajaxSubmit(options);
-		*/
 		if(!getIntroAndValidate())	return false;
 		hasSaved = true;
+		hasSubmit = true;
 		$("#create-form").attr('action', '{{@WEB_ROOT}}publish').submit();
 	}
 
