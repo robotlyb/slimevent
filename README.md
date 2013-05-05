@@ -1,6 +1,18 @@
 SlimEvent
 ======
 
+### 上线部署
+
+1. 在index.php里设置连接数据库用户名和密码
+2. 根据服务器环境，修改.htaccess里的RewriteBase和app/cfg/setup.cfg里的WEB_ROOT
+3. 修改app/cfg/constant.cfg里的WEB_URL
+4. 修改app/cfg/constant.cfg里的DEFAULT_PWD
+5. 修改app/cfg/setup.cfg里的TOKEN_SALT和PWD_SALT
+6. 设置app/cfg/setup.cfg里的DEBUG=0
+7. 通过phpmyadmin导入数据库(仅结构)
+8. 创建管理员用户：打开网站，选择学生登陆，登陆成功后，进入数据库，在users表里插入一条记录(name=“admin" "”nickname="管理员" group=“admin” 其余都复制学生的那条记录)，然后在admin表里插入一条相关记录。用户名：admin，密码：DEFAULT_PWD，登陆系统后，修改密码。
+
+
 ### 环境设定
 
 为方便大家协同开发，请遵循如下设定
