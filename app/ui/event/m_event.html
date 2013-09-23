@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+　<meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>[工大圈子] {{@e.title}}</title>
+  <link type="text/css" rel="stylesheet" href="{{@WEB_ROOT}}static/css/m_event.css" />
+</head>
+
+<body>
+  <div id="hd">
+  </div><!-- hd -->
+
+  <div id="bd">
+    <div class='event-info'>
+      <h1>[{{@e.category}}] {{@e.title}}</h1>
+      <ul>
+        <F3:check if="{{@e.begin_date == @e.end_date}}">
+          <F3:true>
+        <li><span>时间: </span>{{@e.begin_date}} ({{@e.begin_weekday}}) {{@e.begin_time}} - {{@e.end_time}} ({{@e.begin_remain_day}})</li>
+          </F3:true>
+          <F3:false>
+          <li><span>开始时间: </span>{{@e.begin_date}} ({{@e.begin_weekday}}) {{@e.begin_time}} ({{@e.begin_remain_day}})</li>
+          <li><span>结束时间: </span>{{@e.end_date}} ({{@e.end_weekday}}) {{@end_time}} ({{@e.end_remain_day}})</li>
+          </F3:false>
+        </F3:check>
+          <li><span>地点: </span>{{@e.region}} {{@e.addr}}</li>
+          <li><span>发起: </span><a href='#'>{{@e.organizer}}</a></li>
+      </ul>
+    </div><!-- info -->
+    <div class='event-pic'>
+      <img src='{{@WEB_ROOT}}{{@THUMB_IMG_DIR}}{{@e.poster}}' />
+    </div><!-- pic -->
+    <h2 class='event-detail'>活动详情</h2>
+    <div class='event-intro'>
+      {{@e.introduction}}
+    </div><!-- intro -->
+  </div><!-- bd -->
+</body>
+</html>

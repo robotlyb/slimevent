@@ -178,6 +178,10 @@ class SEEvent extends SECommon{
 		$event = Account::view_one_event($this->eid);
 		$event = $this->format_info_to_show($event);
 		F3::set('e',$event);
+    if(F3::get("GET.mobile") == 1) {
+		  echo Template::serve('event/m_event.html');
+      return;
+    }
 
 		$uid = $event['organizer_id'];
 		$label = $event['label'];

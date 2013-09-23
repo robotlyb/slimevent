@@ -315,7 +315,7 @@ class SEHome extends SECommon{
 		
 		$page = F3::get("GET.page");
 		$every_page = F3::get("GET.every_page"); //每页个数
-		$from = $page*$every_page + 1;
+		$from = $page*$every_page;
 		$con .= " LIMIT $from, $every_page";
 		$r = Event::show_by($con, $data);
 		$c = new SECommon();
@@ -370,6 +370,10 @@ class SEHome extends SECommon{
 
 	function run()
 	{
+    if(F3::get("GET.mobile") == 1) {
+		  echo Template::serve('m_event_list.html');
+      return;
+    }
 		$event = new SEEvent();
 
         /*首页滚动的热门活动*/

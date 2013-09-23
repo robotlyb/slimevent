@@ -1,0 +1,129 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+body {
+  font: normal 100% Helvetica, Arial, sans-serif;
+}
+a {
+  text-decoration: none;
+  color: #37A;
+}
+ul,
+ol {
+  list-style-type: none;
+}
+.events-nav-item {
+  margin-bottom: 10px;
+  vertical-align: bottom;
+  overflow: hidden;
+  zoom: 1;
+  font-size: 0.9em;
+  padding-left: 20px;
+}
+.events-nav-item label {
+  float: left;
+  padding: 3px 0px;
+}
+.events-nav-item li {
+  float: left;
+  padding: 3px 5px;
+  border-radius: 2px;
+}
+.events-nav-item .current {
+  background: #46C1CF;
+}
+.events-nav-item .current a {
+  color: #FFF;
+}
+#hd {
+  background: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0, #ffffff), color-stop(1, #eeeeee));
+  border-bottom: 1px solid #CCC;
+}
+#bd {
+  margin-top: 15px;
+  padding-left: 10px;
+}
+.event-list > li {
+  overflow: hidden;
+  zoom: 1;
+  padding-top: 10px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid #e6e6e6;
+}
+.event-list h2 {
+  font-size: 1.1em;
+  color: #37A;
+  padding-bottom: 7px;
+}
+.event-list .pic {
+  float: left;
+}
+.event-list .pic img {
+  width: 72px;
+  height: 115px;
+}
+.event-list .info {
+  margin-left: 6px;
+  float: left;
+}
+.event-list .info li {
+  color: #666;
+  font-size: 0.8em;
+  margin: 4px 0px;
+}
+.event-list .info li a {
+  color: #37A;
+}
+.more {
+  font-size: 1.2em;
+  text-align: center;
+  padding: 15px;
+  cursor: pointer;
+}
+/*
+i{
+  display:inline-block;
+  height:12px;
+  width:20px;
+}
+.icon-time{
+  background: url(./icon/clock2.png) no-repeat;
+}
+.icon-place{
+  background: url(./icon/location.png) no-repeat;
+}
+.icon-people{
+  background: url(./icon/user.png) no-repeat;
+}
+
+  <div class="nav-list">
+
+    <select name="cars">
+      <option value="volvo">全部类别</option>
+      <option value="saab">比赛</option>
+      <option value="fiat">工作</option>
+      <option value="audi">实习</option>
+      <option value="audi">舞会</option>
+      <option value="audi">音乐</option>
+    </select>
+
+    <select name="cars">
+      <option value="volvo">时间</option>
+      <option value="saab">今天</option>
+    </select>
+
+    <select name="cars">
+      <option value="volvo">状态</option>
+      <option value="saab">未开始</option>
+      <option value="saab">已结束</option>
+    </select>
+    <select name="cars">
+      <option value="volvo">校区</option>
+      <option value="saab">一校区</option>
+      <option value="fiat">二校区</option>
+      <option value="audi">建筑校区</option>
+    </select>
+  </div>
+
+*/

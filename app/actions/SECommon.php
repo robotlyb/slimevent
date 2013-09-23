@@ -245,7 +245,7 @@ class SECommon{
 		//else
 			//return $title;
 	/*}*/
-	 function format_info_to_show($info, $type){
+	 function format_info_to_show($info, $type = "all"){
 		// format Time&Date
 		$info = $this->format_time_to_show($info);
 
