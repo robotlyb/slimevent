@@ -1,3 +1,4 @@
+//var get_events_url = "http://192.168.1.104/~kjlmfe/slimevent/m/find?";
 var get_events_url = "http://event.hit.edu.cn/m/find?";
 var param = [];
 param['category'] = "all";
@@ -66,7 +67,7 @@ function getEvents(type) {
     if(type == "more") {
       if(html != "") {
         $('.event-list').append(html);
-        btn.text("摸我，加载更多");
+        btn.text("摸摸我，加载更多");
         btn.removeClass("loading");
       } else {
         btn.text("别摸我了，没有了");
@@ -74,7 +75,7 @@ function getEvents(type) {
     } else {
       $('.event-list').html(html);
       if(html != "") {
-        btn.text("摸我，加载更多");
+        btn.text("摸摸我，加载更多");
         btn.removeClass("loading");
       } else {
         btn.addClass("loading");
@@ -92,14 +93,17 @@ function bindEvent() {
     } 
     param['page']++;
     btn.addClass("loading");
-    btn.text("努力加载中...");
+    btn.text("正在努力获取数据...");
     getEvents("more");
   });
   $(".events-nav-item a").bind('click', function() {
     var p = $(this).parent();
+    var btn = $(".more");
     if(p.hasClass("current")) {
       return false;
     }
+    btn.addClass("loading");
+    btn.text("正在努力获取数据...");
     $(this).parents("ul").children("li").removeClass("current");
     p.addClass("current");
     var data = $(this).attr('href').split('-');
