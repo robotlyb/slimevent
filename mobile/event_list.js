@@ -1,4 +1,4 @@
-var get_events_url = "http://192.168.1.104/~kjlmfe/slimevent/m/find?";
+var get_events_url = "http://event.hit.edu.cn/m/find?";
 var param = [];
 param['category'] = "all";
 param['region'] = "all";
