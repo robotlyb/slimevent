@@ -265,20 +265,20 @@ class SEHome extends SECommon{
 		} 
 		//筛选时间范围
 		$a_day = 60 * 60 * 24;
-        	$yesterday = strtotime("yesterday");
-        	$today = strtotime("today");
-        	$tomorrow = strtotime("tomorrow");
-        	$day_after_tomorrow = $tomorrow + $a_day;
+    $yesterday = strtotime("yesterday");
+    $today = strtotime("today");
+    $tomorrow = strtotime("tomorrow");
+    $day_after_tomorrow = $tomorrow + $a_day;
 		$week = $today + 8 * $a_day;
 		switch(F3::get("GET.range")) {
 		case "today": //今日活动 
-        		$con .= " AND (`begin_time` < $tomorrow AND `begin_time` > $today OR $today > `begin_time` AND $today < `end_time`)";
+					$con .= " AND (`begin_time` < $tomorrow AND `begin_time` > $today OR $today > `begin_time` AND $today < `end_time`)";
 			break;
 		case "tomorrow"://明日活动
-         		$con .= " AND (`begin_time` < $day_after_tomorrow AND `begin_time` > $tomorrow OR $tomorrow > `begin_time` AND $tomorrow < `end_time`)";
+					$con .= " AND (`begin_time` < $day_after_tomorrow AND `begin_time` > $tomorrow OR $tomorrow > `begin_time` AND $tomorrow < `end_time`)";
 			break;
 		case "week"://未来7天
-         		$con .= " AND (`begin_time` < $week AND `begin_time` > $tomorrow OR $tomorrow > `begin_time` AND $tomorrow < `end_time`)";
+					$con .= " AND (`begin_time` < $week AND `begin_time` > $tomorrow OR $tomorrow > `begin_time` AND $tomorrow < `end_time`)";
 			break;
 		}
 
