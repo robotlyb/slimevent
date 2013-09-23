@@ -566,11 +566,15 @@ class SEHome extends SECommon{
 
 	function show_user_info()
 	{
-//		Account::the_user_id();
+  //		Account::the_user_id();
 		$uid = F3::get('PARAMS.userID');
 		$u = Account::get_user_full_info($uid);
-	//	Code::dump($u);
+		//Code::dump($u);
 		F3::set('u',$u);
+    if(F3::get("GET.mobile") == 1) {
+      echo Template::serve('club/m_show_profile.html');
+      return;
+    }
 		echo Template::serve('student/show_profile.html');
 	}
 };

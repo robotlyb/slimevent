@@ -1,0 +1,7 @@
+*{margin:0;padding:0}
+body{font:normal 100% Helvetica,Arial,sans-serif}
+a{text-decoration:none;color:#37a}
+ul,ol{list-style-type:none}
+#bd{padding:10px}
+.user-info h1{text-align:center;font-size:1.5em;color:#37a;padding-bottom:15px}
+.user-info p{font-size:1em;line-height:1.5em}

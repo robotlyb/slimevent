@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+　<meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>[工大圈子] {{@u.0.nickname}}</title>
+  <link type="text/css" rel="stylesheet" href="{{@WEB_ROOT}}static/css/m_show_profile.css" />
+</head>
+
+<body>
+  <div id="hd">
+  </div><!-- hd -->
+
+  <div id="bd">
+    <div class='user-info'>
+      <h1>{{@u.0.nickname}}</h1>
+      <p>
+      <F3:check if="{{@u.1.introduction == '' }}">
+        <true>这个家伙比较懒，什么也没写。</true>
+        <false>{{@u.1.introduction}}</false>
+      </F3:check>
+      </p>
+    </div><!-- user-info -->
+  </div><!-- bd -->
+</body>
+</html>
