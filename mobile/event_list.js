@@ -102,6 +102,7 @@ function bindEvent() {
     if(p.hasClass("current")) {
       return false;
     }
+    $('.event-list').html("");
     btn.addClass("loading");
     btn.text("正在努力获取数据...");
     $(this).parents("ul").children("li").removeClass("current");
