@@ -70,16 +70,21 @@ function getEvents(type) {
         btn.text("摸摸我，加载更多");
         btn.removeClass("loading");
       } else {
-        btn.text("别摸我了，没有了");
+        btn.text("没有了");
       }
     } else {
       $('.event-list').html(html);
       if(html != "") {
-        btn.text("摸摸我，加载更多");
-        btn.removeClass("loading");
+        if(data.length == param['every_page']) {
+          btn.text("摸摸我，加载更多");
+          btn.removeClass("loading");
+        } else {
+          btn.text("没有了");
+          btn.addClass("loading");
+        }
       } else {
-        btn.addClass("loading");
         btn.text("无结果");
+        btn.addClass("loading");
       }
     }
   });
