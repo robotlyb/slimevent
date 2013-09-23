@@ -11,4 +11,4 @@ ul,ol{list-style-type:none}
 .event-list h2{font-size:1.1em;color:#37a;padding-bottom:7px}
 .event-list .pic{float:left}.event-list .pic img{width:72px;height:115px}
 .event-list .info{margin-left:6px;float:left}.event-list .info li{color:#666;font-size:.8em;margin:4px 0}.event-list .info li a{color:#37a}
-.more{font-size:1.2em;text-align:center;padding-top:10px;padding-bottom:25px;cursor:pointer}
+.more{font-size:1.2em;text-align:center;padding-top:10px;padding-bottom:60px;cursor:pointer}
