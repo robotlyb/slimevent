@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+　<meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>工大圈子</title>
+  <link rel="stylesheet" type="text/css" href="./event_list.css" />
+</head>
+
+<body>
+  <div id="hd">
+    <div class="events-nav-item">
+      <label>时间：</label>
+      <ul>
+        <li class="current"><a href="range-all">全部</a></li>
+        <li><a href="range-today">今天</a></li>
+        <li><a href="range-tomorrow">明天</a></li>
+        <li><a href="range-week">最近一周</a></li>
+      </ul>
+    </div>
+    <div class="events-nav-item">
+      <label>校区：</label>
+      <ul>
+        <li class="current"><a href="region-all">全部</a></li>
+        <li><a href="region-1">一校区</a></li>
+        <li><a href="region-2">二校区</a></li>
+        <li><a href="region-3">建筑校区</a></li>
+      </ul>
+    </div>
+    <div class="events-nav-item">
+      <label>类型：</label>
+      <ul>
+        <li class="current"><a href="category-all">全部</a></li>
+        <li><a href="category-1">比赛</a></li>
+        <li><a href="category-2">讲座</a></li>
+        <li><a href="category-3">工作/实习</a></li>
+        <li><a href="category-4">舞会</a></li>
+        <li><a href="category-5">电影</a></li>
+        <li><a href="category-6">音乐</a></li>
+        <li><a href="category-7">公益</a></li>
+        <li><a href="category-8">外语角</a></li>
+        <li><a href="category-9">戏剧</a></li>
+      </ul>
+    </div>
+  </div><!-- hd -->
+
+  <div id="bd">
+    <ul class="event-list">
+    </ul><!-- events-list -->
+    <h3 class="more"></h3>
+  </div><!-- bd -->
+  <script src="./zepto.min.js"></script>
+  <script src="./event_list.min.js"></script>
+</body>
+</html>

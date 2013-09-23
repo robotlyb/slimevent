@@ -245,7 +245,7 @@ class SECommon{
 		//else
 			//return $title;
 	/*}*/
-	 function format_info_to_show($info){
+	 function format_info_to_show($info, $type){
 		// format Time&Date
 		$info = $this->format_time_to_show($info);
 
@@ -260,16 +260,20 @@ class SECommon{
 		$info['label'] = explode(' ',$info['label']);
 		if($info['poster'] == "")
 			$info['poster'] = F3::get('DEFAULT_IMG');
+    if($type == "min") {
+      $info['introduction'] = '';
+    }
 
 		//$info['short_title'] = $this->format_short_title_to_show($info['title']);
 
 		return $info;
 	}
 
-	 function format_infos_to_show($data){
+	 function format_infos_to_show($data, $type = "all"){
 		$d = array();
-		foreach($data as $info)
-			$d[] = $this->format_info_to_show($info);
+		foreach($data as $info) {
+			$d[] = $this->format_info_to_show($info, $type);
+    }
 		return $d;
 	}
 

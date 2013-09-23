@@ -244,6 +244,85 @@ class SEHome extends SECommon{
 			array(':e' => F3::get("EVENT_PASSED_STATUS")), 'week_events', 5);
     }
 
+	function m_event_list(){
+		$con = "1";
+		$data = array();
+
+		$con .= " AND `event`.`status` = :status";//审核通过的活动
+		$data[':status'] = F3::get("EVENT_PASSED_STATUS"); 
+
+		//筛选分类
+		$category = F3::get("GET.category");
+		if(isset($category) && $category != "all") { //all表示全部分类
+			$con .= " AND `event`.`category_id` = :category";
+			$data[':category'] = $category;
+		} 
+		//筛选校区
+		$region = F3::get("GET.region");
+		if(isset($region) && $region != "all") { //all表示全部分类
+			$con .= " AND `event`.`region` = :region";
+			$data[':region'] = $region;
+		} 
+		//筛选时间范围
+		$a_day = 60 * 60 * 24;
+        	$yesterday = strtotime("yesterday");
+        	$today = strtotime("today");
+        	$tomorrow = strtotime("tomorrow");
+        	$day_after_tomorrow = $tomorrow + $a_day;
+		$week = $today + 8 * $a_day;
+		switch(F3::get("GET.range")) {
+		case "today": //今日活动 
+        		$con .= " AND (`begin_time` < $tomorrow AND `begin_time` > $today OR $today > `begin_time` AND $today < `end_time`)";
+			break;
+		case "tomorrow"://明日活动
+         		$con .= " AND (`begin_time` < $day_after_tomorrow AND `begin_time` > $tomorrow OR $tomorrow > `begin_time` AND $tomorrow < `end_time`)";
+			break;
+		case "week"://未来7天
+         		$con .= " AND (`begin_time` < $week AND `begin_time` > $tomorrow OR $tomorrow > `begin_time` AND $tomorrow < `end_time`)";
+			break;
+		}
+
+		//排序
+		switch(F3::get('GET.order')){
+			case "begin":
+				$con .= " ORDER BY event.begin_time";
+				break;
+			case "post":
+				$con .= " ORDER BY event.post_time";
+				break;
+			case "praiser":
+				$con .= " ORDER BY event.praiser_num";
+				break;
+			case "joiner":
+				$con .= " ORDER BY event.joiner_num";
+				break;
+			default:
+				$con .= " ORDER BY event.begin_time";
+				break;
+		}
+        	switch(F3::get('GET.by')) {
+			case "asc":
+				$con .= " ASC";
+				break;
+			case "desc":
+				$con .= " DESC";
+				break;
+            		default:
+				$con .= "  DESC";
+				break;
+        	}
+
+		
+		$page = F3::get("GET.page");
+		$every_page = F3::get("GET.every_page"); //每页个数
+		$from = $page*$every_page + 1;
+		$con .= " LIMIT $from, $every_page";
+		$r = Event::show_by($con, $data);
+		$c = new SECommon();
+		$r = $c->format_infos_to_show($r, "min");
+		echo json_encode($r);
+	}
+
 	function find(){
 
 		$key = F3::get("GET.key");
