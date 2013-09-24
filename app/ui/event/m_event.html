@@ -29,12 +29,14 @@
       </ul>
     </div><!-- info -->
     <div class='event-pic'>
-      <img src='{{@WEB_ROOT}}{{@THUMB_IMG_DIR}}{{@e.poster}}' />
+      <h2 class="loading-img" data-src='{{@WEB_ROOT}}{{@THUMB_IMG_DIR}}{{@e.poster}}'>点击查看海报</h2>
     </div><!-- pic -->
     <h2 class='event-detail'>活动详情</h2>
     <div class='event-intro'>
       {{@e.introduction}}
     </div><!-- intro -->
   </div><!-- bd -->
+  <script src="{{@WEB_ROOT}}static/js/zepto.min.js"></script>
+  <script src='{{@WEB_ROOT}}static/js/m_event.min.js'></script>
 </body>
 </html>
