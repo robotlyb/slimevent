@@ -5,7 +5,8 @@ ul,ol{list-style-type:none}
 .events-nav-item{margin-bottom:10px;vertical-align:bottom;overflow:hidden;zoom:1;font-size:.9em;padding-left:20px}.events-nav-item label{float:left;padding:3px 0}
 .events-nav-item li{float:left;padding:3px 5px;border-radius:2px}
 .events-nav-item .current{background:#46c1cf}.events-nav-item .current a{color:#fff}
-#hd{background:-webkit-gradient(linear, 0 0, 0 100%, color-stop(0, #fff), color-stop(1, #eee));border-bottom:1px solid #ccc}
+#hd{text-align:center;background:-webkit-gradient(linear, 0 0, 0 100%, color-stop(0, #fff), color-stop(1, #eee));border-bottom:1px solid #ccc}#hd img{width:40%;padding-bottom:10px}
+#hd hr{margin-bottom:10px}
 #bd{margin-top:15px;padding-left:10px}
 .event-list>li{overflow:hidden;zoom:1;padding-top:10px;padding-bottom:2px;border-bottom:1px solid #e6e6e6}
 .event-list h2{font-size:1.1em;color:#37a;padding-bottom:7px}

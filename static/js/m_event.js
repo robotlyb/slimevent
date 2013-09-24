@@ -10,7 +10,7 @@ function bindEvent() {
 
     img.src = self.attr('data-src');
     self.addClass("loading");
-    self.text("海报马上出来，亲稍等...");
+    self.text("海报马上出来，请稍等...");
     img.onload = function() {
       $('.event-pic').html(img);
     }

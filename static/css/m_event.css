@@ -2,6 +2,7 @@
 body{font:normal 100% Helvetica,Arial,sans-serif}
 a{text-decoration:none;color:#37a}
 ul,ol{list-style-type:none}
+#hd{text-align:center}#hd img{width:40%;padding-bottom:10px}
 #bd{padding:10px}
 .event-info h1{font-size:1.3em;color:#37a;padding-bottom:7px}
 .event-info ul{margin-left:5px}
