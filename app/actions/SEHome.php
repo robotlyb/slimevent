@@ -80,7 +80,7 @@ class SEHome extends SECommon{
 					break;
 				case 'week':
                     //改为与未来7天有交集
-					$con .= "(`begin_time` < $week AND `begin_time` > $tomorrow OR $tomorrow > `begin_time` AND $tomorrow < `end_time`) AND ";
+					$con .= "(`begin_time` < $week AND `begin_time` > $today OR $today > `begin_time` AND $today < `end_time`) AND ";
 					break;
 				case 'weedend':
 					break;
@@ -240,7 +240,7 @@ class SEHome extends SECommon{
         $event->show_by("", "`event`.`status` = :e AND (`begin_time` < $day_after_tomorrow AND `begin_time` > $tomorrow OR $tomorrow > `begin_time` AND $tomorrow < `end_time`) ORDER BY `begin_time` ASC",
 			array(':e' => F3::get("EVENT_PASSED_STATUS")), 'tomorrow_events', 5);
         
-        $event->show_by("", "`event`.`status` = :e AND (`begin_time` < $week AND `begin_time` > $tomorrow OR $tomorrow > `begin_time` AND $tomorrow < `end_time`) ORDER BY `begin_time` ASC",
+        $event->show_by("", "`event`.`status` = :e AND (`begin_time` < $week AND `begin_time` > $today OR $today > `begin_time` AND $today < `end_time`) ORDER BY `begin_time` ASC",
 			array(':e' => F3::get("EVENT_PASSED_STATUS")), 'week_events', 5);
     }
 
@@ -278,7 +278,7 @@ class SEHome extends SECommon{
 					$con .= " AND (`begin_time` < $day_after_tomorrow AND `begin_time` > $tomorrow OR $tomorrow > `begin_time` AND $tomorrow < `end_time`)";
 			break;
 		case "week"://未来7天
-					$con .= " AND (`begin_time` < $week AND `begin_time` > $tomorrow OR $tomorrow > `begin_time` AND $tomorrow < `end_time`)";
+					$con .= " AND (`begin_time` < $week AND `begin_time` > $today OR $today > `begin_time` AND $today < `end_time`)";
 			break;
 		}
 
