@@ -3,7 +3,7 @@ var get_events_url = "http://event.hit.edu.cn/m/find?";
 var param = [];
 param['category'] = "all";
 param['region'] = "all";
-param['range'] = "week";
+param['range'] = "all";
 param['page'] = 0;
 param['order'] = 'post';
 param['by'] = 'desc';
@@ -104,9 +104,11 @@ function bindEvent() {
   $(".events-nav-item a").bind('click', function() {
     var p = $(this).parent();
     var btn = $(".more");
+    /*
     if(p.hasClass("current")) {
       return false;
     }
+    */
     $('.event-list').html("");
     btn.addClass("loading");
     btn.text("正在努力获取数据...");
