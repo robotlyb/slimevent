@@ -111,28 +111,81 @@ class SEHome extends SECommon{
 	}
 
 	function find_by($key, $word, $order){
-		$data = array(':a' => $word);
+		$data = array();
 		$note = "";
+		if(!isset($keyword_lyb)) $keyword_lyb = "" ;
+		if(!isset($temp_lyb)) $temp_lyb = array(" ") ;
+		if(!isset($len_lyb)) $len_lyb = "" ;
+		
 		switch($key)
 		{
+//**************************************************************************************************************************//
 			case 'keyword':
 				if($word == '-'){
 					$note .= "列出全部活动";
-					$con = " `event`.`status` = :s ";
-					$data = array(':s'=>F3::get("EVENT_PASSED_STATUS"));
+					$data[':s'] = F3::get("EVENT_PASSED_STATUS");
+					$con = " event.status = '".$data[':s']."' ";
+					
 				}else{
 					$note .= "根据关键词:<span class='label label-inverse'>{$word}</label>";
-					$con = "( title LIKE :a OR label LIKE :b OR introduction LIKE :c )
-						AND `event`.`status` = :s GROUP BY(`event`.`eid`) ";
-					$word = '%'.$word.'%';
-					$data = array(':a'=>$word, ':b'=>$word, ':c'=>$word, ':s'=>F3::get("EVENT_PASSED_STATUS"));
+					//if(!isset($len_lyb))
+					//$len_lyb = strlen($word) ;
+					
+					$len_lyb = mb_strlen($word , "utf-8") ;
+					//$word = '%'.$word.'%' ;
+					//$data = array(':a'=>$word, ':b'=>$word, ':c'=>$word, ':s'=>F3::get("EVENT_PASSED_STATUS"));
+					$con = "( " ;
+					for($i = 0 ; $i < $len_lyb - 1 ; $i ++)
+					{	
+						$temp_lyb= mb_substr($word , $i , 1 , 'utf-8') ;
+						if($temp_lyb != ' ')
+						{
+							$keyword_lyb = '%'.$temp_lyb.'%' ;
+							$con .= " title LIKE '".$keyword_lyb."' OR label LIKE '".$keyword_lyb."' OR introduction LIKE '".$keyword_lyb."' OR " ;
+							
+						
+							//$data = array(':a'=>$keyword_lyb, ':b'=>$keyword_lyb, ':c'=>$keyword_lyb);
+						}
+						
+						//AND `event`.`status` = :s GROUP BY(`event`.`eid`) ";
+					}
+					$temp_lyb = mb_substr($word , $len_lyb - 1 , 1 , 'utf-8') ;
+					$keyword_lyb = '%'.$temp_lyb.'%' ;
+					$con.="title LIKE '".$keyword_lyb."' OR label LIKE '".$keyword_lyb."' OR introduction LIKE '".$keyword_lyb."' ) " ;
+					$data[':s'] = F3::get("EVENT_PASSED_STATUS") ;
+					$con .= " AND event.status = '".$data[':s']."' GROUP BY(event.eid) " ;
+					
+					//$data = array(':a'=>$keyword_lyb, ':b'=>$keyword_lyb, ':c'=>$keyword_lyb);
+					//$word = '%'.$word.'%';
+					//$data = array(':a'=>$word, ':b'=>$word, ':c'=>$word, ':s'=>F3::get("EVENT_PASSED_STATUS"));//****//
+					//$con = "( title LIKE keyword_lyb OR label LIKE keyword_lyb OR introduction LIKE keyword )
+						//AND `event`.`status` = :s GROUP BY(`event`.`eid`) ";
+					
+					
 				}
 				break;
+
 			case 'label':
 				$note .= "根据标签:<span class='label label-inverse'>{$word}</label>";
-				$con = " label LIKE :b AND `event`.`status` = :s GROUP BY(`event`.`eid`) ";
-				$word = '%'.$word.'%';
-				$data = array(':b'=>$word, ':s'=>F3::get("EVENT_PASSED_STATUS"));
+				$len_lyb = mb_strlen($word,'utf-8') ;
+				//$temp_lyb = mb_substr($word,1) ;
+				$con = "( " ;
+				for($i = 0 ; $i < $len_lyb - 1 ; $i ++)
+				{
+					$temp_lyb= mb_substr($word , $i , 1 , 'utf-8') ;
+					if($temp_lyb != ' ' )
+					{
+						$keyword_lyb = '%'.$temp_lyb.'%' ;
+						$con .= "label LIKE '".$keyword_lyb."' OR " ;
+					}
+				}
+				$temp_lyb = mb_substr($word,$len_lyb - 1 , 1 , 'utf-8') ;
+				$keyword_lyb = '%'.$temp_lyb.'%' ;
+				$con .= "label LIKE '".$keyword_lyb."')  " ;
+				$data[':s'] = F3::get("EVENT_PASSED_STATUS");
+				$con = "  AND event.status = '".$data[':s']."' GROUP BY(event.eid) ";
+				
+				
 				break;
 			//case 'category_id':
 			//case 'category':
@@ -171,18 +224,14 @@ class SEHome extends SECommon{
 			//default:
 				//$con = "eid = :a ";
 		}
-
 		//if($order != null && stripos($con, 'status') === false){
 		if(stripos($con, 'status') === false){
 			$con .= "AND event.status = :s ";
 			$data[':s'] = F3::get("EVENT_PASSED_STATUS");
 		}
 
-        $category_id = F3::get('GET.category');
-		if($category_id) {
-            $con .= "AND `category_id` = $category_id";
-        }
 
+//根据开始时间排序
 		switch($order){
 			case "begin":
 				$con .= " ORDER BY event.begin_time";
@@ -211,10 +260,11 @@ class SEHome extends SECommon{
 				$con .= "  DESC";
 				break;
         }
-
+		unset($data[':s']);//**************************//
 		$r = array('con'=>$con,'array'=>$data, 'note'=>$note);
 
 		// 根据条件筛选(附加其他条件)
+		
 		return $this->filter($r);
 	}
 
@@ -247,21 +297,23 @@ class SEHome extends SECommon{
 	function m_event_list(){
 		$con = "1";
 		$data = array();
-
-		$con .= " AND `event`.`status` = :status";//审核通过的活动
 		$data[':status'] = F3::get("EVENT_PASSED_STATUS"); 
+		$con .= " AND event.status = '".$data[':status']."'";//审核通过的活动
+		
 
 		//筛选分类
 		$category = F3::get("GET.category");
 		if(isset($category) && $category != "all") { //all表示全部分类
-			$con .= " AND `event`.`category_id` = :category";
 			$data[':category'] = $category;
+			$con .= " AND event.category_id ='".$data[':category']."' ";
+			
 		} 
 		//筛选校区
 		$region = F3::get("GET.region");
 		if(isset($region) && $region != "all") { //all表示全部分类
-			$con .= " AND `event`.`region` = :region";
 			$data[':region'] = $region;
+			$con .= " AND event.region = '".$data[':region']."'";
+			
 		} 
 		//筛选时间范围
 		$a_day = 60 * 60 * 24;

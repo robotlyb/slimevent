@@ -14,10 +14,10 @@ F3::config('app/cfg/routes.cfg');
 F3::set('alone_clubs',array('201','新基论坛','星期舞'));
 
 F3::set('DB', new DB(
-	'mysql:host=localhost;port=3306;dbname=slimevent',
+	'mysql:host=localhost;port=80;dbname=slimevent',
 	//'mysql:host=192.168.17.254;port=3306;dbname=slimevent',
 	'root',
-	'vpcm'
+	''
 ));
 
 F3::run();
